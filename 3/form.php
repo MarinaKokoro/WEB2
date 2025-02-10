@@ -7,8 +7,8 @@
   <input name="dateOfBirth" type="date"><br>
 
   Пол:<br>
-  <input name="radio-f" type="radio" value="female">Женский
-  <input name="radio-m" type="radio" value="male">Мужской<br>
+  <label><input name="radio" checked="checked" type="radio" value="female">Женский</label>
+  <label><input name="radio" type="radio" value="male">Мужской</label><br>
 
   
   Любимый язык программирования:
@@ -31,10 +31,10 @@
 
   
   Биография:<br>
-  <textarea></textarea>
+  <textarea name="bio"></textarea>
   <br>
 
   <input name="check" type="checkbox" checked="checked">С контрактом ознакомлен(а)<br>
 
-  <input name="send" type="submit" value="Отправить">
+  <input name="send" type="submit" value="Сохранить">
 </form>

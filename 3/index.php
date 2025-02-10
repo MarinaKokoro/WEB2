@@ -1,10 +1,9 @@
 <?php
-// Отправляем браузеру правильную кодировку,
-// файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
 
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
   if (!empty($_GET['save'])) {
@@ -18,17 +17,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
 
+print($_POST);
+
 // Проверяем ошибки.
 $errors = FALSE;
-if (empty($_POST['fio'])) {
+
+if (empty($_POST['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150}$/ui', $_POST['fio'])) {
   print('Заполните имя.<br/>');
   $errors = TRUE;
 }
 
-if (empty($_POST['year']) || !is_numeric($_POST['year']) || !preg_match('/^\d+$/', $_POST['year'])) {
-  print('Заполните год.<br/>');
+if (empty($_POST['telephone']) || !preg_match('/^\+?{11,14}$/', $_POST['telephone'])) {
+  print('Заполните телефон.<br/>');
   $errors = TRUE;
 }
+
+if (empty($_POST['email']) || !preg_match('/^\w+@\w+.\w+$/', $_POST['email'])) {
+  print('Заполните почту.<br/>');
+  $errors = TRUE;
+}
+
+if (empty($_POST['dateOfBirth'])) {
+  print('Заполните дату рождения.<br/>');
+  $errors = TRUE;
+}
+
+if (empty($_POST['abilities[]'])) {
+  print('Выберите любимый ЯП.<br/>');
+  $errors = TRUE;
+}
+
+if (empty($_POST['bio'])) {
+  print('Заполните биографию.<br/>');
+  $errors = TRUE;
+}
+
+if (empty($_POST['check'])) {
+  print('Согласитесь с котрактом или покиньте сайт.<br/>');
+  $errors = TRUE;
+}
+
 
 
 // *************
