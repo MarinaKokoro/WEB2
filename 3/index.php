@@ -34,7 +34,7 @@ function err_check($P) {
       $errors = TRUE;
     }
 
-    if (empty($P['bio']) || !preg_match('/^(\w )+$/', $P['bio'])) {
+    if (empty($P['bio']) || !preg_match('/^(\w|\s)+$/', $P['bio'])) {
       print('Заполните биографию.<br/>');
       $errors = TRUE;
     }
