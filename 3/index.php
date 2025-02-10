@@ -17,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
 
-print($_POST);
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
 
 // Проверяем ошибки.
 $errors = FALSE;
@@ -27,7 +29,7 @@ if (empty($_POST['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150
   $errors = TRUE;
 }
 
-if (empty($_POST['telephone']) || !preg_match('/^\+?{11,14}$/', $_POST['telephone'])) {
+if (empty($_POST['telephone']) || !preg_match('/^\+?[0-9]{11,14}$/', $_POST['telephone'])) {
   print('Заполните телефон.<br/>');
   $errors = TRUE;
 }
