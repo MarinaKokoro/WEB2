@@ -1,41 +1,31 @@
 <form action="" method="POST">
-  
-    <input type="text" placeholder="Введите ФИО">
-  <br>
+  <input name="fio" type="text" placeholder="ФИО"><br>
+  <input name="telephone" type="tel" placeholder="Номер телефона"><br>
+  <input name="email" type="email" placeholder="Email@mail.mail"><br>
 
-  
-  <input type="tel" placeholder="Введите ваш номер телефона">
-  <br>
-
-  
-  <input type="email" placeholder="Введите ваш email">
-  <br>
-
-  
   Дата рождения:<br>
-  <input type="date">
-  <br>
+  <input name="dateOfBirth" type="date"><br>
 
   Пол:<br>
-  <<input type="radio" checked="checked" name="radio-group-1" value="Значение1">Женский
-  <input type="radio" name="radio-group-1" value="Значение2">Мужской<br>
+  <input name="radio-f" type="radio" value="female">Женский
+  <input name="radio-m" type="radio" value="male">Мужской<br>
 
   
   Любимый язык программирования:
   <br>
-  <select name="field-name-4[]"
-      multiple="multiple">
-      <option value="Значение1">Pascal</option>
-      <option value="Значение2">C</option>
-      <option value="Значение3">JavaScript</option>
-      <option value="Значение4">C++</option>
-      <option value="Значение5">PHP</option>
-      <option value="Значение6">Python</option>
-      <option value="Значение7">Java</option>
-      <option value="Значение8">Haskel</option>
-      <option value="Значение9">Clojure</option>
-      <option value="Значение10">Prolog</option>
-      <option value="Значение10">Scala</option>
+  <select name="abilities[]" multiple="multiple">
+      <option value="Pascal">Pascal</option>
+      <option value="C">C</option>
+      <option value="C++">C++</option>
+      <option value="JavaScript">JavaScript</option>
+      <option value="PHP">PHP</option>
+      <option value="Python">Python</option>
+      <option value="Java">Java</option>
+      <option value="Haskel">Haskel</option>
+      <option value="Clojure">Clojure</option>
+      <option value="Prolog">Prolog</option>
+      <option value="Scala">Scala</option>
+      <option value="Go">Go</option>
   </select>
   <br>
 
@@ -44,17 +34,7 @@
   <textarea></textarea>
   <br>
 
-  <input type="checkbox" checked="checked">С контрактом ознакомлен(а)<br>
+  <input name="check" type="checkbox" checked="checked">С контрактом ознакомлен(а)<br>
 
-  <input type="submit" value="Отправить">
-  <input name="fio" />
-  <select name="year">
-    <?php 
-    for ($i = 1922; $i <= 2022; $i++) {
-      printf('<option value="%d">%d год</option>', $i, $i);
-    }
-    ?>
-  </select>
-  
-  <input type="submit" value="ok" />
+  <input name="send" type="submit" value="Отправить">
 </form>
