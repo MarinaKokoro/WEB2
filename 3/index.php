@@ -1,45 +1,45 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 
-function err_check($_POST) {
+function err_check($P) {
     $errors = FALSE;
 
-    if (empty($_POST['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150}$/ui', $_POST['fio'])) {
+    if (empty($P['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150}$/ui', $P['fio'])) {
       print('Заполните имя.<br/>');
       $errors = TRUE;
     }
 
-    if (empty($_POST['telephone']) || !preg_match('/^\+?[0-9]{11,14}$/', $_POST['telephone'])) {
+    if (empty($P['telephone']) || !preg_match('/^\+?[0-9]{11,14}$/', $P['telephone'])) {
       print('Заполните телефон.<br/>');
       $errors = TRUE;
     }
 
-    if (empty($_POST['email']) || !preg_match('/^\w+@\w+.\w+$/', $_POST['email'])) {
+    if (empty($P['email']) || !preg_match('/^\w+@\w+.\w+$/', $P['email'])) {
       print('Заполните почту.<br/>');
       $errors = TRUE;
     }
     //[dateOfBirth] => 2005-11-21
-    if (empty($_POST['dateOfBirth']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['dateOfBirth'])) {
+    if (empty($P['dateOfBirth']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $P['dateOfBirth'])) {
       print('Заполните дату рождения.<br/>');
       $errors = TRUE;
     }
 
-    if (empty($_POST['radio']) || !($_POST['radio'] == "female" || $_POST['radio'] == "male")) {
+    if (empty($P['radio']) || !($P['radio'] == "female" || $P['radio'] == "male")) {
       print('Выберите пол.<br/>');
       $errors = TRUE;
     }
     //!
-    if (empty($_POST['abilities'])) {
+    if (empty($P['abilities'])) {
       print('Выберите любимый ЯП.<br/>');
       $errors = TRUE;
     }
 
-    if (empty($_POST['bio']) || !preg_match('/^(\w )+$/', $_POST['bio'])) {
+    if (empty($P['bio']) || !preg_match('/^(\w )+$/', $P['bio'])) {
       print('Заполните биографию.<br/>');
       $errors = TRUE;
     }
 
-    if (empty($_POST['check'])) {
+    if (empty($P['check'])) {
       print('Согласитесь с котрактом или покиньте сайт.<br/>');
       $errors = TRUE;
     }
