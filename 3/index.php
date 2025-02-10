@@ -18,7 +18,7 @@ function err_check($P) {
       print('Заполните почту.<br/>');
       $errors = TRUE;
     }
-    //[dateOfBirth] => 2005-11-21
+
     if (empty($P['dateOfBirth']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $P['dateOfBirth'])) {
       print('Заполните дату рождения.<br/>');
       $errors = TRUE;
@@ -28,10 +28,19 @@ function err_check($P) {
       print('Выберите пол.<br/>');
       $errors = TRUE;
     }
-    //!
+    
+    $allAbilities = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scala", "Go");
     if (empty($P['abilities'])) {
       print('Выберите любимый ЯП.<br/>');
       $errors = TRUE;
+    }
+    else{
+      foreach ($_POST['abilities'] as $ability) {
+        if (!in_array($ability, $allAbilities)){
+          print('Выберите любимый ЯП.<br/>');
+          $errors = TRUE;
+        }
+      }
     }
 
     if (empty($P['bio']) || !preg_match('/^(\w|\s)+$/', $P['bio'])) {
