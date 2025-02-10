@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
 
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
+//echo '<pre>';
+//print_r($_POST);
+//echo '</pre>';
 
 // Проверяем ошибки.
 $errors = FALSE;
@@ -38,18 +38,18 @@ if (empty($_POST['email']) || !preg_match('/^\w+@\w+.\w+$/', $_POST['email'])) {
   print('Заполните почту.<br/>');
   $errors = TRUE;
 }
-
-if (empty($_POST['dateOfBirth'])) {
+//[dateOfBirth] => 2005-11-21
+if (empty($_POST['dateOfBirth']) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $_POST['dateOfBirth'])) {
   print('Заполните дату рождения.<br/>');
   $errors = TRUE;
 }
 
-if (empty($_POST['abilities[]'])) {
+if (empty($_POST['abilities'])) {
   print('Выберите любимый ЯП.<br/>');
   $errors = TRUE;
 }
 
-if (empty($_POST['bio'])) {
+if (empty($_POST['bio']) || !preg_match('/^\w+$/', $_POST['bio'])) {
   print('Заполните биографию.<br/>');
   $errors = TRUE;
 }
