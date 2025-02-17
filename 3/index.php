@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
+echo "<link rel='stylesheet' href='style.css'>";
 
 function err_check($P, $abilities) {
     $errors = FALSE;
