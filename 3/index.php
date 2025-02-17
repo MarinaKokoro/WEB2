@@ -90,9 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 echo '<pre>';
 //Это в select, поэтому надо подключится до подключения form.php
-foreach ($abilities as $key => $value) {
+/*foreach ($abilities as $key => $value) {
   printf('<option value="%s">%s</option>', $key, $value)
-}
+}*/
 // проверить все из анкеты на наличие в массиве языков !empty($abilites[$_POST[]])
 
 echo '</pre>';
