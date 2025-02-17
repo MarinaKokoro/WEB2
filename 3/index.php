@@ -53,6 +53,22 @@ function err_check($P, $abilities) {
     }
     return $errors;
 }
+function getAbilities($db){
+  try {
+    $abilities = [];
+    $data = $db->query("SELECT id_lang, name FROM langs")->fetchAll();
+    foreach ($data as $ability) {
+      $name = $ability['name'];
+      $id_lang = $ability['id_lang'];
+      $abilities[$id_lang] = $name;
+    }
+    return $abilities;
+  }
+  catch(PDOException $e){
+    print('Error: ' . $e->getMessage());
+    exit();
+  }
+}
 
 // Сохранение в базу данных.
 $user = 'u68859'; 
@@ -61,23 +77,7 @@ $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass,
       [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
 
 //получаем списки языков в виде пар айди-название
-try {
-  $abilities = [];
-  $data = $db->query("SELECT id_lang, name FROM langs")->fetchAll();
-  foreach ($data as $ability) {
-    $name = $ability['name'];
-    $id_lang = $ability['id_lang'];
-    $abilities[$id_lang] = $name;
-  }
-}
-catch(PDOException $e){
-  print('Error: ' . $e->getMessage());
-  exit();
-}
-
-/*echo '<pre>';
-print_r($abilities);
-echo '</pre>';*/
+$abilities = getAbilities($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -93,8 +93,6 @@ if (err_check($_POST, $abilities)) {
   exit();
 }
 
-/*
-// Подготовленный запрос. Не именованные метки.
 try {
   $stmt = $db->prepare("INSERT INTO application (name, phone, email, dateBirth, sex, bio) VALUES (:name, :phone, :email, :dateBirth, :sex, :bio)");
   $stmt->bindParam(':name', $_POST['fio']);
@@ -104,14 +102,25 @@ try {
   $stmt->bindParam(':sex', $_POST['radio']);
   $stmt->bindParam(':bio', $_POST['bio']);
   $stmt->execute();
-
-  //$stmt2 = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (:id_app, :id_lang)");
-  //$stmt->bindParam(':id_app', );
 }
 catch(PDOException $e){
   print('Error: ' . $e->getMessage());
   exit();
-}*/
+}
+
+try {
+  $id_app = $db->lastInsertId();
+  $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (:id_app, :id_lang)");
+  foreach ($_POST['abilities'] as $ability) {
+    $stmt->bindParam(':id_app', $id_app);
+    $stmt->bindParam(':id_lang', $ability);
+    $stmt->execute();
+  }
+}
+catch(PDOException $e){
+  print('Error: ' . $e->getMessage());
+  exit();
+}
 
 //ДОБАВИТЬ ЗАПОЛНЕНИЕ CONNECTION 
 
