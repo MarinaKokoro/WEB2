@@ -69,14 +69,45 @@ function getAbilities($db){
     exit();
   }
 }
+function toApplication($db){
+  try {
+    $stmt = $db->prepare("INSERT INTO application (name, phone, email, dateBirth, sex, bio) VALUES (:name, :phone, :email, :dateBirth, :sex, :bio)");
+    $stmt->bindParam(':name', $_POST['fio']);
+    $stmt->bindParam(':phone', $_POST['telephone']);
+    $stmt->bindParam(':email', $_POST['email']);
+    $stmt->bindParam(':dateBirth', $_POST['dateOfBirth']);
+    $stmt->bindParam(':sex', $_POST['radio']);
+    $stmt->bindParam(':bio', $_POST['bio']);
+    $stmt->execute();
+  }
+  catch(PDOException $e){
+    print('Error: ' . $e->getMessage());
+    exit();
+  }
+}
+function toConnection($db){
+  try {
+    $id_app = $db->lastInsertId();
+    $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (:id_app, :id_lang)");
+    foreach ($_POST['abilities'] as $ability) {
+      $stmt->bindParam(':id_app', $id_app);
+      $stmt->bindParam(':id_lang', $ability);
+      $stmt->execute();
+    }
+  }
+  catch(PDOException $e){
+    print('Error: ' . $e->getMessage());
+    exit();
+  }
+}
 
-// Сохранение в базу данных.
+// Входим в базу данных.
 $user = 'u68859'; 
 $pass = '5248297'; 
 $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
       [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
 
-//получаем списки языков в виде пар айди-название
+// Получаем списки языков
 $abilities = getAbilities($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -93,37 +124,8 @@ if (err_check($_POST, $abilities)) {
   exit();
 }
 
-try {
-  $stmt = $db->prepare("INSERT INTO application (name, phone, email, dateBirth, sex, bio) VALUES (:name, :phone, :email, :dateBirth, :sex, :bio)");
-  $stmt->bindParam(':name', $_POST['fio']);
-  $stmt->bindParam(':phone', $_POST['telephone']);
-  $stmt->bindParam(':email', $_POST['email']);
-  $stmt->bindParam(':dateBirth', $_POST['dateOfBirth']);
-  $stmt->bindParam(':sex', $_POST['radio']);
-  $stmt->bindParam(':bio', $_POST['bio']);
-  $stmt->execute();
-}
-catch(PDOException $e){
-  print('Error: ' . $e->getMessage());
-  exit();
-}
-
-try {
-  $id_app = $db->lastInsertId();
-  $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (:id_app, :id_lang)");
-  foreach ($_POST['abilities'] as $ability) {
-    $stmt->bindParam(':id_app', $id_app);
-    $stmt->bindParam(':id_lang', $ability);
-    $stmt->execute();
-  }
-}
-catch(PDOException $e){
-  print('Error: ' . $e->getMessage());
-  exit();
-}
-
-//ДОБАВИТЬ ЗАПОЛНЕНИЕ CONNECTION 
-
+toApplication($db);
+toConnection($db)
 
 header('Location: ?save=1');
 
