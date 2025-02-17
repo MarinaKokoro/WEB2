@@ -75,7 +75,7 @@ catch(PDOException $e){
 }
 
 echo '<pre>';
-print_r(abilities);
+print_r($abilities);
 echo '</pre>';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
