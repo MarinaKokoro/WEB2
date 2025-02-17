@@ -14,18 +14,11 @@
   Любимый язык программирования:
   <br>
   <select name="abilities[]" multiple="multiple">
-      <option value="Pascal">Pascal</option>
-      <option value="C">C</option>
-      <option value="C++">C++</option>
-      <option value="JavaScript">JavaScript</option>
-      <option value="PHP">PHP</option>
-      <option value="Python">Python</option>
-      <option value="Java">Java</option>
-      <option value="Haskel">Haskel</option>
-      <option value="Clojure">Clojure</option>
-      <option value="Prolog">Prolog</option>
-      <option value="Scala">Scala</option>
-      <option value="Go">Go</option>
+      <?php 
+      foreach ($abilities as $key => $value) {
+        printf('<option value="%s">%s</option>', $key, $value)
+      } 
+      ?>
   </select>
   <br>
 

@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 
-function err_check($P, $allAbilities) {
+function err_check($P, $abilities) {
     $errors = FALSE;
 
     if (empty($P['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150}$/ui', $P['fio'])) {
@@ -35,7 +35,7 @@ function err_check($P, $allAbilities) {
     }
     else{
       foreach ($_POST['abilities'] as $ability) {
-        if (!in_array($ability, $allAbilities)){
+        if (!empty($abilities[$ability])){
           print('Выберите любимый ЯП из списка.<br/>');
           $errors = TRUE;
         }
@@ -57,7 +57,8 @@ function err_check($P, $allAbilities) {
 // Сохранение в базу данных.
 $user = 'u68859'; 
 $pass = '5248297'; 
-$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
+$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
+      [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
 
 //получаем списки языков в виде пар айди-название
 try {
@@ -74,9 +75,9 @@ catch(PDOException $e){
   exit();
 }
 
-echo '<pre>';
+/*echo '<pre>';
 print_r($abilities);
-echo '</pre>';
+echo '</pre>';*/
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -88,16 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   exit();
 }
 
-echo '<pre>';
-//Это в select, поэтому надо подключится до подключения form.php
-/*foreach ($abilities as $key => $value) {
-  printf('<option value="%s">%s</option>', $key, $value)
-}*/
-// проверить все из анкеты на наличие в массиве языков !empty($abilites[$_POST[]])
-
-echo '</pre>';
-
-if (err_check($_POST, $allAbilities)) {
+if (err_check($_POST, $abilities)) {
   exit();
 }
 
