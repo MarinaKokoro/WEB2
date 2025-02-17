@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 
-function err_check($P) {
+function err_check($P, $allAbilities) {
     $errors = FALSE;
 
     if (empty($P['fio']) || !preg_match('/^([A-Z]|[a-z]| |[а-я]|[А-Я]){3,150}$/ui', $P['fio'])) {
@@ -14,7 +14,7 @@ function err_check($P) {
       $errors = TRUE;
     }
 
-    if (empty($P['email']) || !preg_match('/^\w+@\w+.\w+$/', $P['email'])) {
+    if (empty($P['email']) || !preg_match('/^\w{1,80}@\w{1,10}.\w{1, 10}$/', $P['email'])) {
       print('Заполните почту.<br/>');
       $errors = TRUE;
     }
@@ -29,7 +29,6 @@ function err_check($P) {
       $errors = TRUE;
     }
     
-    $allAbilities = array("Pascal", "C", "C++", "JavaScript", "PHP", "Python", "Java", "Haskel", "Clojure", "Prolog", "Scala", "Go");
     if (empty($P['abilities'])) {
       print('Выберите любимый ЯП.<br/>');
       $errors = TRUE;
@@ -37,13 +36,13 @@ function err_check($P) {
     else{
       foreach ($_POST['abilities'] as $ability) {
         if (!in_array($ability, $allAbilities)){
-          print('Выберите любимый ЯП.<br/>');
+          print('Выберите любимый ЯП из списка.<br/>');
           $errors = TRUE;
         }
       }
     }
 
-    if (empty($P['bio']) || !preg_match('/^(\w|\s)+$/', $P['bio'])) {
+    if (empty($P['bio']) || !preg_match('/^(\w|\s){1, 1000}$/', $P['bio'])) {
       print('Заполните биографию.<br/>');
       $errors = TRUE;
     }
@@ -61,42 +60,72 @@ function err_check($P) {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
   if (!empty($_GET['save'])) {
-    // Если есть параметр save, то выводим сообщение пользователю.
     print('Спасибо, результаты сохранены.');
   }
 
-  // Включаем содержимое файла form.php.
   include('form.php');
-  // Завершаем работу скрипта.
   exit();
 }
-// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
 
-//echo '<pre>';
-//print_r($_POST);
-//echo '</pre>';
-
-// Проверяем ошибки.
-if (err_check($_POST)) {
-  exit();
-}
 
 // Сохранение в базу данных.
 
-$user = 'u68859'; // Заменить на ваш логин uXXXXX
-$pass = '5248297'; // Заменить на пароль
-$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass,
-  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+$user = 'u68859'; 
+$pass = '5248297'; 
+$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
 
+try {
+  $allAbilities = $db->query("SELECT name FROM langs")->fetchAll();
+}
+catch(PDOException $e){
+  print('Error: ' . $e->getMessage());
+  exit();
+}
+echo '<pre>';
+print_r($allAbilities);
+echo '</pre>';
+
+if (err_check($_POST, $allAbilities)) {
+  exit();
+}
+
+/*
 // Подготовленный запрос. Не именованные метки.
 try {
+  $stmt = $db->prepare("INSERT INTO application (name, phone, email, dateBirth, sex, bio) VALUES (:name, :phone, :email, :dateBirth, :sex, :bio)");
+  $stmt->bindParam(':name', $_POST['fio']);
+  $stmt->bindParam(':phone', $_POST['telephone']);
+  $stmt->bindParam(':email', $_POST['email']);
+  $stmt->bindParam(':dateBirth', $_POST['dateOfBirth']);
+  $stmt->bindParam(':sex', $_POST['radio']);
+  $stmt->bindParam(':bio', $_POST['bio']);
+  $stmt->execute();
+
+  //$stmt2 = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (:id_app, :id_lang)");
+  //$stmt->bindParam(':id_app', );
+}
+catch(PDOException $e){
+  print('Error: ' . $e->getMessage());
+  exit();
+}*/
+
+//ЗАПОЛНИТЬ LANGS
+//ДОБАВИТЬ ЗАПОЛНЕНИЕ CONNECTION 
+
+
+// Делаем перенаправление.
+// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
+// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
+header('Location: ?save=1');
+
+/*try {
   $stmt = $db->prepare("INSERT INTO application SET name = ?");
   $stmt->execute([$_POST['fio']]);
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
-}
+}*/
 
 //  stmt - это "дескриптор состояния".
  
@@ -115,7 +144,3 @@ $email = "john@test.com";
 $stmt->execute();
 */
 
-// Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
-header('Location: ?save=1');
