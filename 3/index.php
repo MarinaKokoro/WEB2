@@ -125,7 +125,7 @@ if (err_check($_POST, $abilities)) {
 }
 
 toApplication($db);
-toConnection($db)
+toConnection($db);
 
 header('Location: ?save=1');
 
