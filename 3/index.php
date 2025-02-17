@@ -35,7 +35,7 @@ function err_check($P, $abilities) {
     }
     else{
       foreach ($_POST['abilities'] as $ability) {
-        if (!empty($abilities[$ability])){
+        if (empty($abilities[$ability])){
           print('Выберите любимый ЯП из списка.<br/>');
           $errors = TRUE;
         }
