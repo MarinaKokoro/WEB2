@@ -42,7 +42,7 @@ function err_check($P, $abilities) {
       }
     }
 
-    if (empty($P['bio']) || !preg_match('/^(\w|\s){1,1000}$/', $P['bio'])) {
+    if (empty($P['bio']) || !preg_match('/^(\w|\s|.|!|,|\?|\(|\)){1,1000}$/', $P['bio'])) {
       print('Заполните биографию.<br/>');
       $errors = TRUE;
     }
