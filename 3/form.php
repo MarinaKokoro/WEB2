@@ -16,7 +16,7 @@
   <select name="abilities[]" multiple="multiple">
       <?php 
       foreach ($abilities as $key => $value) {
-        printf('<option value="%s">%s</option>', $key, $value)
+        printf('<option value="%s">%s</option>', $key, $value);
       } 
       ?>
   </select>
