@@ -14,7 +14,7 @@ function err_check($P, $allAbilities) {
       $errors = TRUE;
     }
 
-    if (empty($P['email']) || !preg_match('/^\w{1,80}@\w{1,10}.\w{1, 10}$/', $P['email'])) {
+    if (empty($P['email']) || !preg_match('/^\w{1,80}@\w{1,10}.\w{1,10}$/', $P['email'])) {
       print('Заполните почту.<br/>');
       $errors = TRUE;
     }
@@ -42,7 +42,7 @@ function err_check($P, $allAbilities) {
       }
     }
 
-    if (empty($P['bio']) || !preg_match('/^(\w|\s){1, 1000}$/', $P['bio'])) {
+    if (empty($P['bio']) || !preg_match('/^(\w|\s){1,1000}$/', $P['bio'])) {
       print('Заполните биографию.<br/>');
       $errors = TRUE;
     }
@@ -54,11 +54,32 @@ function err_check($P, $allAbilities) {
     return $errors;
 }
 
-// В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
-// и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
+// Сохранение в базу данных.
+$user = 'u68859'; 
+$pass = '5248297'; 
+$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
+
+//получаем списки языков в виде пар айди-название
+try {
+  $abilities = [];
+  $data = $db->query("SELECT id_lang, name FROM langs")->fetchAll();
+  foreach ($data as $ability) {
+    $name = $ability['name'];
+    $id_lang = $ability['id_lang'];
+    $abilities[$id_lang] = $name;
+  }
+}
+catch(PDOException $e){
+  print('Error: ' . $e->getMessage());
+  exit();
+}
+
+echo '<pre>';
+print_r(abilities);
+echo '</pre>';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
+
   if (!empty($_GET['save'])) {
     print('Спасибо, результаты сохранены.');
   }
@@ -67,22 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   exit();
 }
 
-
-// Сохранение в базу данных.
-
-$user = 'u68859'; 
-$pass = '5248297'; 
-$db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-
-try {
-  $allAbilities = $db->query("SELECT name FROM langs")->fetchAll();
-}
-catch(PDOException $e){
-  print('Error: ' . $e->getMessage());
-  exit();
-}
 echo '<pre>';
-print_r($allAbilities);
+//Это в select, поэтому надо подключится до подключения form.php
+foreach ($abilities as $key => $value) {
+  printf('<option value="%s">%s</option>', $key, $value)
+}
+// проверить все из анкеты на наличие в массиве языков !empty($abilites[$_POST[]])
+
 echo '</pre>';
 
 if (err_check($_POST, $allAbilities)) {
@@ -109,38 +121,9 @@ catch(PDOException $e){
   exit();
 }*/
 
-//ЗАПОЛНИТЬ LANGS
 //ДОБАВИТЬ ЗАПОЛНЕНИЕ CONNECTION 
 
 
-// Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
 header('Location: ?save=1');
 
-/*try {
-  $stmt = $db->prepare("INSERT INTO application SET name = ?");
-  $stmt->execute([$_POST['fio']]);
-}
-catch(PDOException $e){
-  print('Error : ' . $e->getMessage());
-  exit();
-}*/
-
-//  stmt - это "дескриптор состояния".
- 
-//  Именованные метки.
-//$stmt = $db->prepare("INSERT INTO test (label,color) VALUES (:label,:color)");
-//$stmt -> execute(['label'=>'perfect', 'color'=>'green']);
- 
-//Еще вариант
-/*$stmt = $db->prepare("INSERT INTO users (firstname, lastname, email) VALUES (:firstname, :lastname, :email)");
-$stmt->bindParam(':firstname', $firstname);
-$stmt->bindParam(':lastname', $lastname);
-$stmt->bindParam(':email', $email);
-$firstname = "John";
-$lastname = "Smith";
-$email = "john@test.com";
-$stmt->execute();
-*/
 
