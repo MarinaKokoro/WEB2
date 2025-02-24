@@ -268,6 +268,9 @@ function checkErrorAndSaveErrorCookies($P, $abilities) {
     return $errors;
 }
 
+$db = getDatabase();
+$abilities = getAbilities($db);
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array();
@@ -283,9 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else {  
-  $db = getDatabase();
-  $abilities = getAbilities($db);
-  $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
+   $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies();
 
   if ($errors) {
@@ -293,7 +294,7 @@ else {
     exit();
   }
   else {
-    deleteErrorCookies();
+    deleteErrorCookies($_POST);
   }
 
   saveToApplication($db);
