@@ -287,14 +287,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else {  
    $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
-  saveValueCookies();
+  saveValueCookies($_POST);
 
   if ($errors) {
     header('Location: index.php');
     exit();
   }
   else {
-    deleteErrorCookies($_POST);
+    deleteErrorCookies();
   }
 
   saveToApplication($db);
