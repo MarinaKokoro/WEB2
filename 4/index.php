@@ -61,7 +61,7 @@ function saveToConnection($db){
 function getErrors(){
   $errors = array();
 
-  $errors['fio'] = empty($_COOKIE['fio_error']) ? 0 : $_COOKIE['_error'];
+  $errors['fio'] = empty($_COOKIE['fio_error']) ? 0 : $_COOKIE['fio_error'];
   $errors['telephone'] = empty($_COOKIE['telephone_error']) ? 0 : $_COOKIE['telephone_error'];
   $errors['email'] = empty($_COOKIE['email_error']) ? 0 : $_COOKIE['email_error'];
   $errors['dateOfBirth'] = empty($_COOKIE['dateOfBirth_error']) ? 0 : $_COOKIE['dateOfBirth_error'];
