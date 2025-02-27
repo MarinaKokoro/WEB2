@@ -277,16 +277,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   if (!empty($_COOKIE['save'])) {
     setcookie('save', '', 100000);
-    $messages[] = 'Спасибо, результаты сохранены.';
+    $messages[] = '<div class="success">Спасибо, результаты сохранены.</div>';
   }
 
   $errors = getErrors();
-  $messages = setMessagesAndDeleteCookies($errors);
+  $errorMessages = setMessagesAndDeleteCookies($errors);
+  $messages = array_merge($messages, $errorMessages);
   $values = getValuesFromCookies();
   include('form.php');
 }
 else {  
-  //print_r($_POST);
    $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST);
 
