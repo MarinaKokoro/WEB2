@@ -45,8 +45,7 @@
         
       Биография:<br>
       <div <?php if ($errors['bio']) {print 'class="error"';} ?>>
-        <textarea id="bio" name="bio"
-            value="<?php print $values['bio']; ?>"></textarea>
+        <textarea id="bio" name="bio"><?php print htmlspecialchars($values['bio']); ?></textarea>
       </div><br>
       
       <div <?php if ($errors['check']) {print 'class="error"';} ?>>

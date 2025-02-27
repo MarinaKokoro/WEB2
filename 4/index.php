@@ -253,7 +253,7 @@ function checkErrorAndSaveErrorCookies($P, $abilities) {
       setcookie('bio_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
-    elseif(!preg_match('/^(\w|\s|.|!|,|\?|\(|\)){1,1000}$/', $P['bio'])){
+    elseif(!preg_match('/^[\w\s!?,()]{1,1000}$/u', $P['bio'])){
       setcookie('bio_error', '2', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
@@ -286,13 +286,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else {  
-  print_r($_POST);
+  //print_r($_POST);
    $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST);
 
   if ($errors) {
-    //header('Location: index.php');
-    print_r($_POST);
+    header('Location: index.php');
     exit();
   }
   else {
