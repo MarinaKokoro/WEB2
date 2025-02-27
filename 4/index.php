@@ -291,7 +291,7 @@ else {
   saveValueCookies($_POST);
 
   if ($errors) {
-    header('Location: index.php');
+    //header('Location: index.php');
     print_r($_POST);
     exit();
   }
