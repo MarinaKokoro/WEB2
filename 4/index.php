@@ -253,7 +253,7 @@ function checkErrorAndSaveErrorCookies($P, $abilities) {
       setcookie('bio_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
-    elseif(!preg_match('/^[\w\s!?,()]{1,1000}$/u', $P['bio'])){
+    elseif(!preg_match('/^[\w\s!?,.()]{1,1000}$/u', $P['bio'])){
       setcookie('bio_error', '2', time() + 24 * 60 * 60);
       $errors = TRUE;
     }
