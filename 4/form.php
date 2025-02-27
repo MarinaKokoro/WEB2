@@ -1,11 +1,4 @@
 <html>
-  <head>
-    <style>
-      .error {
-      border: 2px solid red;
-      }
-    </style>
-  </head>
   <body>
 
     <?php
