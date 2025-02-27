@@ -286,6 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else {  
+  print($_POST['bio']);
    $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST);
 
