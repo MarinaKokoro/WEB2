@@ -33,24 +33,25 @@
       
       Любимый язык программирования:
       <br>
-      <select id="abilities" name="abilities[]" multiple="multiple"
-            <?php if ($errors['abilities']) {print 'class="error"';} ?>>
-          <?php 
-            foreach ($abilities as $key => $value) {
-              printf('<option value="%s">%s</option>', $key, $value);
-            } 
-          ?>
-      </select>
-      <br>
-
-      
+      <div <?php if ($errors['abilities']) {print 'class="error"';} ?>>
+        <select id="abilities" name="abilities[]" multiple="multiple">
+            <?php 
+              foreach ($abilities as $key => $value) {
+                printf('<option value="%s">%s</option>', $key, $value);
+              } 
+            ?>
+        </select>
+      </div><br>
+        
       Биография:<br>
-      <textarea id="bio" name="bio"
-          <?php if ($errors['bio']) {print 'class="error"';} ?> value="<?php print $values['bio']; ?>"></textarea>
-      <br>
-
-      <input id="check" name="check" type="checkbox" checked="checked"
-          <?php if ($errors['check']) {print 'class="error"';} ?>>С контрактом ознакомлен(а)<br>
+      <div <?php if ($errors['bio']) {print 'class="error"';} ?>>
+        <textarea id="bio" name="bio"
+            value="<?php print $values['bio']; ?>"></textarea>
+      </div><br>
+      
+      <div <?php if ($errors['check']) {print 'class="error"';} ?>>
+        <input id="check" name="check" type="checkbox" checked="checked">С контрактом ознакомлен(а)
+      </div><br>
 
       <input id="submit" name="send" type="submit" value="Сохранить">
     </form>
