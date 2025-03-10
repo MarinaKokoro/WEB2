@@ -88,7 +88,7 @@ function saveToConnection($db){
     exit();
   }
 }
-function saveToAuth($db, $pass){
+function saveToAuth($db, $pass, $login){
   try {
       $id_app = $db->lastInsertId();
       $hash_pass = md5($pass);
@@ -394,7 +394,7 @@ else {
     // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
     saveToApplication($db);
     saveToConnection($db);
-    saveToAuth($db, $pass);
+    saveToAuth($db, $pass, $login);
     
   }
 
