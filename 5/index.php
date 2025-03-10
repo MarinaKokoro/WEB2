@@ -200,7 +200,7 @@ function setMessagesAndDeleteCookies($errors){
   
   return $messages;
 }
-function getValuesFromCookies(){
+function getValuesFromCookies($abilities){
   $values = array();
 
   $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
@@ -225,7 +225,7 @@ function deleteErrorCookies(){
     setcookie('bio_error', '', 100000);
     setcookie('check_error', '', 100000);
 }
-function saveValueCookies($P){
+function saveValueCookies($P, $abilities){
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
@@ -349,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors = getErrors();
   $errorMessages = setMessagesAndDeleteCookies($errors);
   $messages = array_merge($messages, $errorMessages);
-  $values = getValuesFromCookies();
+  $values = getValuesFromCookies($abilities);
 
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
@@ -368,7 +368,7 @@ else {
   }
 
    $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
-  saveValueCookies($_POST);
+  saveValueCookies($_POST, $abilities);
 
   if (!empty($errors)) {
     header('Location: index.php');
