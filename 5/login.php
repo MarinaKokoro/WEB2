@@ -1,6 +1,15 @@
 <?php
-
 header('Content-Type: text/html; charset=UTF-8');
+
+function getDatabase(){
+  $user = 'u68859'; 
+  $pass = '5248297'; 
+  $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
+      [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
+
+  return $db;
+}
+$db = getDatabase();
 
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
