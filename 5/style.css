@@ -1,0 +1,90 @@
+body {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh; 
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px 0; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+
+#messages {
+    width: 320px; 
+    text-align: center;
+    margin-bottom: 15px; 
+}
+
+.error, .success {
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background: white;
+    margin: 5px 0;
+}
+
+.error {
+    border: 2px solid red;
+    color: red;
+}
+
+.success {
+    border: 2px solid green;
+    color: green;
+}
+
+
+#form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+}
+
+
+input, #abilities, #bio {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+.radio, #check {
+    width: auto;
+    margin-right: 5px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 5px 0;
+}
+
+#bio {
+    height: 100px; 
+    resize: none;
+}
+
+
+#submit {
+    background-color: #1f87b0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#submit:hover {
+    background-color: #125874;
+}
