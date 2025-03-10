@@ -119,7 +119,7 @@ function getErrors(){
   return $errors;
 }
 
-function setMessagesAndDeleteCookies($errors){
+function setMessagesAndDeleteCookies($errors, $abilities){
   $messages = array();
 
   // Выдаем сообщения об ошибках.
@@ -177,6 +177,9 @@ function setMessagesAndDeleteCookies($errors){
 
   if ($errors['abilities'] != 0) {
     setcookie('abilities_error', '', 100000);
+    foreach($abilities as $key => $value){
+    setcookie($key, '', 100000);
+  }
     if ($errors['abilities'] == 1)
       $messages[] = '<div class="error">Заполните любимые ЯП.</div>';
     else
