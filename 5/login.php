@@ -52,7 +52,7 @@ else {
   try {
     $pass = $_POST['pass'];
 
-    $data = $db->prepare("SELECT pass FROM auth where login = :login")->fetchObject();
+    $data = $db->prepare("SELECT pass FROM auth where login = :login");
     $data->bindParam(':login', $_POST['login']);
     $data->execute();
     if(md5($pass) == $data){
