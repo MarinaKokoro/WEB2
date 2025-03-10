@@ -207,7 +207,10 @@ function getValuesFromCookies(){
   $values['telephone'] = empty($_COOKIE['telephone_value']) ? '' : $_COOKIE['telephone_value'];
   $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
   $values['dateOfBirth'] = empty($_COOKIE['dateOfBirth_value']) ? '' : $_COOKIE['dateOfBirth_value'];
-  $values['abilities'] = empty($_COOKIE['abilities_value']) ? '' : $_COOKIE['abilities_value'];
+  foreach($abilities as $key => $value){
+    $values[$key] = empty($_COOKIE[$key]) ? '' : $_COOKIE[$key];
+  }
+  
   $values['bio'] = empty($_COOKIE['bio_value']) ? '' : $_COOKIE['bio_value'];
 
   return $values;
@@ -227,7 +230,9 @@ function saveValueCookies($P){
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
-  setcookie('abilities_value', $P['abilities'], time() + 12 * 30 * 24 * 60 * 60);
+  foreach($abilities as $key => $value){
+    setcookie($key, !empty($P[$key]), time() + 12 * 30 * 24 * 60 * 60);
+  }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
 }
 function checkErrorAndSaveErrorCookies($P, $abilities) {
