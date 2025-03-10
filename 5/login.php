@@ -55,6 +55,7 @@ else {
     $data = $db->prepare("SELECT pass FROM auth where login = :login");
     $data->bindParam(':login', $_POST['login']);
     $data->execute();
+    print($data);
     if(md5($pass) == $data){
       $auth = true;
     }
