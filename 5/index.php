@@ -236,7 +236,7 @@ function saveValueCookies($P, $abilities){
   print($P);
   foreach($abilities as $key => $value){
     setcookie($key, (!empty($P[$key]) ? 1 : 0), time() + 12 * 30 * 24 * 60 * 60);
-    print($_COOKIE[$key])
+    print($_COOKIE[$key]);
   }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
 }
