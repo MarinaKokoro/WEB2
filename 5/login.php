@@ -62,6 +62,7 @@ else {
     $data->execute();
     $user = $data->fetch(PDO::FETCH_ASSOC);
    
+    print($user['pass']);
     if(md5($pass) == $user['pass']){
       $auth = true;
     }
