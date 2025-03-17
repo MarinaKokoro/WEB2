@@ -38,8 +38,10 @@
       <div <?php if ($errors['abilities']) {print 'class="error"';} ?>>
         <select id="abilities" name="abilities[]" multiple="multiple">
             <?php 
+            print_r($values);
               foreach ($abilities as $key => $value) {
                 //
+                print($key);
                 $selected = $values['abilities'][$key];
                 printf('<option value="%s"', $key);
                 if($selected){
