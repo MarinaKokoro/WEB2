@@ -364,7 +364,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 
-  include('form.php');
+  //include('form.php');
 }
 else {  
   if(!empty($_POST['exit'])){
