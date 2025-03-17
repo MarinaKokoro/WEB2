@@ -57,9 +57,8 @@ else {
     $data->execute();
     $data = $data->fetch();
     
-    foreach ($data as $d) {
-      print($d['pass']);
-    }
+    print($data);
+    print($data['pass']);
     if(md5($pass) == $data['pass']){
       $auth = true;
     }
