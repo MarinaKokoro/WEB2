@@ -365,6 +365,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else { 
 
+  $P = $_POST;
+  print_r($P);
   foreach($_POST as $key => $value){
     printf("%s %s",$key, $value);
   }

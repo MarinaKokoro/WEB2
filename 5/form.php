@@ -9,6 +9,9 @@
       }
       print('</div>');
 
+      print("ЕБУЧИЙ пост");
+      print_r($P);
+
       foreach($_POST as $key => $value){
     printf("%s %s",$key, $value);
   }
