@@ -203,6 +203,7 @@ function setMessagesAndDeleteCookies($errors, $abilities){
   
   return $messages;
 }
+//или тут треш
 function getValuesFromCookies($abilities){
   $values = array();
 
@@ -211,7 +212,6 @@ function getValuesFromCookies($abilities){
   $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
   $values['dateOfBirth'] = empty($_COOKIE['dateOfBirth_value']) ? '' : $_COOKIE['dateOfBirth_value'];
   foreach($abilities as $key => $value){
-    printf("%s %s        ", $key, $_COOKIE[$key]);
     $values[$key] = empty($_COOKIE[$key]) ? '' : $_COOKIE[$key];
   }
   
@@ -229,15 +229,15 @@ function deleteErrorCookies(){
     setcookie('bio_error', '', 100000);
     setcookie('check_error', '', 100000);
 }
+//Тут какой-то треш
 function saveValueCookies($P, $abilities){
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
   print_r($P);
-  foreach($abilities as $key => $value){
-    printf("%s %s    ", $key, $P['abilities'][$key]);
-    setcookie($key, (!empty($P['abilities'][$key]) ? 1 : ''), time() + 12 * 30 * 24 * 60 * 60);
+  foreach($$P['abilities'] as $key => $value){
+    setcookie($value, 1, time() + 12 * 30 * 24 * 60 * 60);
   }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
 }
