@@ -54,10 +54,11 @@ else {
 
     $data = $db->prepare("SELECT pass FROM auth where login = :login");
     $data->bindParam(':login', $_POST['login']);
-    $data->fetchAll();
+    $data->execute();
+    $data = $data->fetch();
     
     foreach ($data as $d) {
-      print(d['pass']);
+      print($d['pass']);
     }
     if(md5($pass) == $data['pass']){
       $auth = true;
