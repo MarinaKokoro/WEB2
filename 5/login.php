@@ -56,6 +56,7 @@ else {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
 
+    print($login);
     $data = $db->prepare("SELECT pass FROM auth WHERE login = :login");
     $data->bindParam(':login', $login);
     $data->execute();
