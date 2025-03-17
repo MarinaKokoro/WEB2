@@ -38,6 +38,7 @@
             <?php 
               foreach ($abilities as $key => $value) {
                 $selected = $values[$key];
+                print($selected);
                 printf('<option value="%s"', $key);
                 if(!empty($selected)){
                   print(' selected ');
