@@ -58,8 +58,8 @@ else {
 
     $data = $db->prepare("SELECT pass FROM auth WHERE login = :login");
     $data->bindParam(':login', $login);
-    $result = $data->execute();
-    $user = $result->fetchAll(PDO::FETCH_ASSOC);
+    $data->execute();
+    $user = $data->fetch(PDO::FETCH_ASSOC);
    
     if(md5($pass) == $user['pass']){
       $auth = true;
