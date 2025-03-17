@@ -26,6 +26,8 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
     //при нажатии на кнопку Выход).
     // Делаем перенаправление на форму. 
 
+
+    //переделать
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       print('<form action="" method="post"><input id="exit" name="exit" type="submit" value="Выход"></form>');
     }

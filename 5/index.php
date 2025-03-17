@@ -350,7 +350,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   $errors = getErrors();
-  $errorMessages = setMessagesAndDeleteCookies($errors);
+  $errorMessages = setMessagesAndDeleteCookies($errors, $abilities);
   $messages = array_merge($messages, $errorMessages);
   $values = getValuesFromCookies($abilities);
 
