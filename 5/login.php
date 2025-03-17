@@ -16,7 +16,7 @@ $db = getDatabase();
 
 $session_started = false;
 
-if ($_COOKIE[session_name()] && session_start()) {
+if (isset($_COOKIE[session_name()]) && session_start()) {
 
   $session_started = true;
 
@@ -26,10 +26,13 @@ if ($_COOKIE[session_name()] && session_start()) {
     //при нажатии на кнопку Выход).
     // Делаем перенаправление на форму. 
 
-
-    print('<input id="exit" name="exit" type="submit" value="Выход">');
-    header('Location: ./');
-    print('<input id="exit" name="exit" type="submit" value="Выход">');
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      print('<form action="" method="post"><input id="exit" name="exit" type="submit" value="Выход"></form>');
+    }
+    else { 
+      session_destroy();
+      header('Location: ./');
+    }
     exit();
   }
 }
@@ -55,8 +58,8 @@ else {
 
     $data = $db->prepare("SELECT pass FROM auth WHERE login = :login");
     $data->bindParam(':login', $login);
-    $data->execute();
-    $user = $data->fetch(PDO::FETCH_ASSOC);
+    $result = $data->execute();
+    $user = $result->fetch(PDO::FETCH_ASSOC);
    
     if(md5($pass) == $user['pass']){
       $auth = true;
