@@ -364,7 +364,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else { 
-  foreach($_POST as $key => $value){
+  foreach($_POST['abilities'] as $key => $value){
     printf("%s %s",$key, $value);
   }
   $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
