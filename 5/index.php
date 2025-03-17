@@ -230,7 +230,7 @@ function deleteErrorCookies(){
 }
 function saveValueCookies($P, $abilities){
   foreach($P as $key => $value){
-    print($key, " ", $value);
+    printf("%s %s",$key, $value);
   }
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
