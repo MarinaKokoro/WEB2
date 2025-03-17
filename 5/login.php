@@ -50,15 +50,15 @@ else {
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   $auth = false;
   try {
+    $login = $_POST['login'];
     $pass = $_POST['pass'];
 
-    $data = $db->prepare("SELECT pass FROM auth where login = :login");
-    $data->bindParam(':login', $_POST['login']);
+    $data = $db->prepare("SELECT pass FROM auth WHERE login = :login");
+    $data->bindParam(':login', $login);
     $data->execute();
-    $data = $data->fetchObject();
-    
-    print($data);
-    if(md5($pass) == $data['pass']){
+    $user = $data->fetch(PDO::FETCH_ASSOC);
+   
+    if(md5($pass) == $user['pass']){
       $auth = true;
     }
   }
