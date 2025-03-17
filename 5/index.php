@@ -364,9 +364,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else { 
-
-  $P = $_POST;
-  print_r($P);
   foreach($_POST as $key => $value){
     printf("%s %s",$key, $value);
   }
@@ -374,7 +371,7 @@ else {
   saveValueCookies($_POST, $abilities);
 
   if (!empty($errors)) {
-    header('Location: index.php');
+    //header('Location: index.php');
     exit();
   }
   else {
