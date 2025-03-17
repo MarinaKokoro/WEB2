@@ -234,7 +234,7 @@ function saveValueCookies($P, $abilities){
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
   foreach($abilities as $key => $value){
-    setcookie($key, (!empty($P[$key]) ? 1 : 0), time() + 12 * 30 * 24 * 60 * 60);
+    setcookie($key, (!empty($P['abilities'][$key]) ? 1 : 0), time() + 12 * 30 * 24 * 60 * 60);
   }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
 }
@@ -364,14 +364,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else { 
-  foreach($_POST['abilities'] as $key => $value){
-    printf("%s %s",$key, $value);
-  }
+  
   $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST, $abilities);
 
   if (!empty($errors)) {
-    //header('Location: index.php');
+    header('Location: index.php');
     exit();
   }
   else {
