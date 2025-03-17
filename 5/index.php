@@ -229,6 +229,9 @@ function deleteErrorCookies(){
     setcookie('check_error', '', 100000);
 }
 function saveValueCookies($P, $abilities){
+  foreach($P as $key => $value){
+    print($key, " ", $value);
+  }
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
@@ -364,13 +367,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   include('form.php');
 }
 else { 
-  print_r($_POST); 
-  if(!empty($_POST['exit'])){
-    session_destroy();
-    exit();
-  }
 
-   $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
+
+  $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST, $abilities);
 
   if (!empty($errors)) {
