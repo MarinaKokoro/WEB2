@@ -233,8 +233,10 @@ function saveValueCookies($P, $abilities){
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
+  print($P);
   foreach($abilities as $key => $value){
     setcookie($key, (!empty($P[$key]) ? 1 : 0), time() + 12 * 30 * 24 * 60 * 60);
+    print($_COOKIE[$key])
   }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
 }
