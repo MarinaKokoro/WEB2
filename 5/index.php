@@ -233,7 +233,6 @@ function saveValueCookies($P, $abilities){
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
-  print_r($P);
   foreach($abilities as $key => $value){
     setcookie($key, (!empty($P[$key]) ? 1 : 0), time() + 12 * 30 * 24 * 60 * 60);
   }
@@ -364,7 +363,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   include('form.php');
 }
-else {  
+else { 
+  print_r($_POST); 
   if(!empty($_POST['exit'])){
     session_destroy();
     exit();
