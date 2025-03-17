@@ -57,12 +57,12 @@ else {
     $pass = $_POST['pass'];
 
     
-    $data = $db->prepare("select pass from auth where login = \"8aaab4eaf\"");
-    //$data->bindParam(':login', $login);
-    $data->execute();
+    $data = $db->prepare("select pass from auth where login = ?");
+    $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
    
     print($user['pass']);
+    
     if(md5($pass) == $user['pass']){
       $auth = true;
     }
