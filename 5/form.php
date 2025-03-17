@@ -2,8 +2,6 @@
   <body>
 
     <?php
-    $abilities = getAbilities($db);
-
     if (!empty($messages)) {
       print('<div id="messages">');
       foreach ($messages as $message) {
@@ -38,11 +36,9 @@
       <div <?php if ($errors['abilities']) {print 'class="error"';} ?>>
         <select id="abilities" name="abilities[]" multiple="multiple">
             <?php 
-            print_r($values);
               foreach ($abilities as $key => $value) {
-                //
                 print($key);
-                $selected = $values['abilities'][$key];
+                $selected = $values[$key];
                 printf('<option value="%s"', $key);
                 if($selected){
                   print(' selected ');
