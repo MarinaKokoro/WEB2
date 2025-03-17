@@ -39,7 +39,7 @@
               foreach ($abilities as $key => $value) {
                 //
                 $selected = $values['abilities'][$key];
-                printf('<option value="%s"', $key) 
+                printf('<option value="%s"', $key);
                 if($selected){
                   print('selected');
                 }
