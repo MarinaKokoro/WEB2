@@ -43,7 +43,7 @@
                 if($selected){
                   print('selected');
                 }
-                print('>%s</option>', $value);
+                printf('>%s</option>', $value);
               } 
             ?>
         </select>
