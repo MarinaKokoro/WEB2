@@ -229,9 +229,6 @@ function deleteErrorCookies(){
     setcookie('check_error', '', 100000);
 }
 function saveValueCookies($P, $abilities){
-  foreach($P as $key => $value){
-    printf("%s %s",$key, $value);
-  }
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
@@ -368,7 +365,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else { 
 
-
+  foreach($_POST as $key => $value){
+    printf("%s %s",$key, $value);
+  }
   $errors = checkErrorAndSaveErrorCookies($_POST, $abilities);
   saveValueCookies($_POST, $abilities);
 

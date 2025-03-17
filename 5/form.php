@@ -8,6 +8,10 @@
         print($message);
       }
       print('</div>');
+
+      foreach($_POST as $key => $value){
+    printf("%s %s",$key, $value);
+  }
     }?>
 
     <form id="form" action="" method="POST">
