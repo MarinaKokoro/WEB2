@@ -36,12 +36,9 @@
       <div <?php if ($errors['abilities']) {print 'class="error"';} ?>>
         <select id="abilities" name="abilities[]" multiple="multiple">
             <?php 
-              print_r($P);
               print_r($values);
               foreach ($abilities as $key => $value) {
                 $selected = $values[$key];
-                print($key);
-                print($selected);
                 printf('<option value="%s"', $key);
                 if(!empty($selected)){
                   print(' selected ');
