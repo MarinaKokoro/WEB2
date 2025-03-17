@@ -2,33 +2,6 @@
   <body>
 
     <?php
-
-    function getDatabase(){
-      $user = 'u68859'; 
-      $pass = '5248297'; 
-      $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
-          [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-
-      return $db;
-    }
-    function getAbilities($db){
-      try {
-        $abilities = [];
-        $data = $db->query("SELECT id_lang, name FROM langs")->fetchAll();
-        foreach ($data as $ability) {
-          $name = $ability['name'];
-          $id_lang = $ability['id_lang'];
-          $abilities[$id_lang] = $name;
-        }
-        return $abilities;
-      }
-      catch(PDOException $e){
-        print('Error: ' . $e->getMessage());
-        exit();
-      }
-    }
-
-    $db = getDatabase();
     $abilities = getAbilities($db);
 
     if (!empty($messages)) {
