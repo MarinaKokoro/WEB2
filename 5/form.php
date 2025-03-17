@@ -37,10 +37,9 @@
         <select id="abilities" name="abilities[]" multiple="multiple">
             <?php 
               foreach ($abilities as $key => $value) {
-                print($key);
                 $selected = $values[$key];
                 printf('<option value="%s"', $key);
-                if($selected){
+                if(!empty($selected)){
                   print(' selected ');
                 }
                 printf('>%s</option>', $value);
