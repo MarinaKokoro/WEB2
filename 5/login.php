@@ -56,7 +56,7 @@ else {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
 
-    
+    $login = "8aaab4eaf";    
     $data = $db->prepare("select pass from auth where login = ?");
     $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
