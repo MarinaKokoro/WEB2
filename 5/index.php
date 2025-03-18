@@ -82,9 +82,7 @@ function saveToConnection($db){
       $stmt->bindParam(':id_lang', $ability);
       $stmt->execute();
     }
-
-
-    saveToAuth($db, $pass, $login, $id_app);
+    return $id_app;
   }
   catch(PDOException $e){
     print('Error: ' . $e->getMessage());
@@ -394,9 +392,8 @@ else {
 
     // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
     saveToApplication($db);
-    saveToConnection($db);
-    
-    
+    $id_app = saveToConnection($db);
+    saveToAuth($db, $pass, $login, $id_app);
   }
 
   //saveToApplication($db);
