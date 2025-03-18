@@ -69,7 +69,7 @@ else {
     print(' ');
     print($user['pass']);
     //сравнивать через специальную функцию
-    if(password_verify(md5($pass),$user['pass'])){
+    if(md5($pass) == $user['pass']){
       $auth = true;
     }
   }
