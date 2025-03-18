@@ -57,17 +57,17 @@ else {
   try {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
-    //print($login);
-    //print(' ');
+    print($login);
+    print(' ');
     //Проверить че не так
    
     $data = $db->prepare("select pass from auth where login = ?");
     $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
    
-    //print($pass);
-    //print(' ');
-    //print($user['pass']);
+    print(md5($pass));
+    print(' ');
+    print($user['pass']);
     //сравнивать через специальную функцию
     if(password_verify(md5($pass),$user['pass'])){
       $auth = true;
