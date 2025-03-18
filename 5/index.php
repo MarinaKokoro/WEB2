@@ -82,15 +82,17 @@ function saveToConnection($db){
       $stmt->bindParam(':id_lang', $ability);
       $stmt->execute();
     }
+
+
+    saveToAuth($db, $pass, $login, $id_app);
   }
   catch(PDOException $e){
     print('Error: ' . $e->getMessage());
     exit();
   }
 }
-function saveToAuth($db, $pass, $login){
+function saveToAuth($db, $pass, $login, $id_app){
   try {
-      $id_app = $db->lastInsertId();
       $hash_pass = md5($pass);
       $stmt = $db->prepare("INSERT INTO auth (id_app, login, pass) VALUES (:id_app, :login, :pass)");
       $stmt->bindParam(':id_app', $id_app);
@@ -178,8 +180,8 @@ function setMessagesAndDeleteCookies($errors, $abilities){
   if ($errors['abilities'] != 0) {
     setcookie('abilities_error', '', 100000);
     foreach($abilities as $key => $value){
-    setcookie($key, '', 100000);
-  }
+      setcookie($key, '', 100000);
+    }
     if ($errors['abilities'] == 1)
       $messages[] = '<div class="error">Заполните любимые ЯП.</div>';
     else
@@ -203,7 +205,6 @@ function setMessagesAndDeleteCookies($errors, $abilities){
   
   return $messages;
 }
-//или тут треш
 function getValuesFromCookies($abilities){
   $values = array();
 
@@ -229,7 +230,6 @@ function deleteErrorCookies(){
     setcookie('bio_error', '', 100000);
     setcookie('check_error', '', 100000);
 }
-//Тут какой-то треш
 function saveValueCookies($P, $abilities){
   setcookie('fio_value', $P['fio'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
@@ -395,7 +395,7 @@ else {
     // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
     saveToApplication($db);
     saveToConnection($db);
-    saveToAuth($db, $pass, $login);
+    
     
   }
 
@@ -403,9 +403,9 @@ else {
   //saveToConnection($db);
 
   // Сохраняем куку с признаком успешного сохранения.
-  //setcookie('save', '1');
+  setcookie('save', '1');
 
-  //header('Location: ./');
+  header('Location: ./');
 }
 
 
