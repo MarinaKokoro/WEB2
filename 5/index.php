@@ -235,8 +235,8 @@ function saveValueCookies($P, $abilities){
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
-  print_r($P);
-  foreach($$P['abilities'] as $key => $value){
+  //print_r($P);
+  foreach($P['abilities'] as $key => $value){
     setcookie($value, 1, time() + 12 * 30 * 24 * 60 * 60);
   }
   setcookie('bio_value', $P['bio'], time() + 12 * 30 * 24 * 60 * 60);
@@ -372,7 +372,7 @@ else {
   saveValueCookies($_POST, $abilities);
 
   if (!empty($errors)) {
-    //header('Location: index.php');
+    header('Location: index.php');
     exit();
   }
   else {
