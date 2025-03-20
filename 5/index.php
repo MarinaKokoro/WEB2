@@ -370,11 +370,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
   if (empty($errors)){
-    print("См: ошибок нет ");
-    if(!empty($_COOKIE[session_name()])){
-      print("См: есть кука сессии ");
+    if(isset($_COOKIE[session_name()])){
       if(session_start()){
-        print("См: начали сессию ");
         if(!empty($_SESSION['login'])) {
           $values = getValuesFromDB($db, $_SESSION['login']);
           printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
@@ -398,9 +395,24 @@ else {
     deleteErrorCookies();
   }
 
-  if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
-    // TODO: перезаписать данные в БД новыми данными,
-    // кроме логина и пароля.
+  if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
+    try {
+      $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE login = ?");
+      $stmt->execute([
+              $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio'], $_SESSION['login']
+          ]);
+
+      $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
+      $stmt->execute([$_SESSION['uid']]);
+
+      foreach ($_POST['abilities'] as $id_lang) {
+          $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (?, ?)");
+          $stmt->execute([$_SESSION['uid'], $id_lang]);
+      }
+    } catch (PDOException $e) {
+        print('Ошибка при сохранении данных: ' . $e->getMessage());
+        exit();
+    }
   }
   else {
     $login = substr(md5(time()), 0, 9);;

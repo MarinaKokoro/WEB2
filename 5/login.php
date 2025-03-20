@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 else {
   $auth = false;
+  $uid = -1;
   try {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
@@ -62,6 +63,13 @@ else {
     if(md5($pass) == $user['pass']){
       $auth = true;
     }
+
+    $data = $db->prepare("select id_app from auth where login = ?");
+    $data->execute([$login]);
+    $user = $data->fetch(PDO::FETCH_ASSOC);
+
+    $uid = $user['id_app'];
+    
   }
   catch(PDOException $e){
     print('Error: ' . $e->getMessage());
@@ -76,7 +84,7 @@ else {
       session_start();
     }
     $_SESSION['login'] = $_POST['login'];
-    $_SESSION['uid'] = rand();
+    $_SESSION['uid'] = $uid;
 
     header('Location: ./');
   }
