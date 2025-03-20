@@ -401,7 +401,7 @@ else {
 
       $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?");
       $stmt->execute([
-              $_SESSION['uid'], $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio']
+              $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio'], $_SESSION['uid']
           ]);
 
       $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
