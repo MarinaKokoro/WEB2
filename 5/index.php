@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: text/html; charset=UTF-8');
 echo "<link rel='stylesheet' href='style.css'>";
   // Не забыть про ЯП и доделать их для ошибочного ввода (предыдущее задание)
