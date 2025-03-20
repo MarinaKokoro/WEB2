@@ -370,14 +370,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
   if (empty($errors)){
-    //if(isset($_COOKIE[session_name()])){
+    if(isset($_COOKIE[session_name()])){
       if(session_start()){
         if(!empty($_SESSION['login'])) {
           $values = getValuesFromDB($db, $_SESSION['login']);
           printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
         }
       }
-    //}
+    }
   }
 
   include('form.php');
@@ -394,8 +394,10 @@ else {
   else {
     deleteErrorCookies();
   }
+  print($_COOKIE[session_name()]);
+  print($_SESSION['login']);
 
-  if (!empty($_SESSION['login'])) { //!empty($_COOKIE[session_name()]) && 
+  if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
     try {
       $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE login = ?");
       $stmt->execute([
