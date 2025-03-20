@@ -38,23 +38,36 @@ function getValuesFromDB($db, $login){
   //Достать по логину id_app
   // По id_app достать инфу для анкеты
   // Не забыть про ЯП и доделать их для ошибочного ввода (предыдущее задание)
-  $id = $db->prepare("SELECT id_app FROM auth where login = :login")->fetchObject();
+
+
+  $id = $db->prepare("SELECT id_app FROM auth where login = :login");
   $id->bindParam(':login', $login);
   $id->execute();
+  $id_app = id->fetch(PDO::FETCH_ASSOC);
 
-  $data = $db->prepare("SELECT id_app, name, phone, email, dateBirth, sex, bio FROM application where login = :login")->fetchObject();
-  $data->bindParam(':login', $_POST['login']);
-  $data->execute();
+  $data = $db->prepare("SELECT name, phone, email, dateBirth, sex, bio FROM application where id_app = ?");
+  $data->execute([$id_app]);
+  $user = $data->fetch(PDO::FETCH_ASSOC);
 
-  $abilityById = [];
-  $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = :id_app")->fetchAll();
-  $tmp->bindParam(':id_app', $data[0]);
-  $tmp->execute();
-  foreach ($tmp as $ability) {
-    $abilityById[] = $ability;
-  }
+  $values = array();
+  if ($user_data) {
+            $values = [
+                'fio' => $user_data['name'],
+                'telephone' => $user_data['phone'],
+                'email' => $user_data['email'],
+                'dateOfBirth' => $user_data['dateBirth'],
+                'bio' => $user_data['bio'],
+            ];
 
+            $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = ?");
+            $tmp->execute([$id_app]);
+            $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
 
+            foreach ($tmp as $id_lang) {
+                $values[$id_lang] = 1;
+            }
+        }
+  return $values;
 }
 
 function saveToApplication($db){
@@ -356,10 +369,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
-  if (empty($errors) && !empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
-    $values = getValuesFromDB($db);
-
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+  if (empty($errors)){
+    print("См: ошибок нет ");
+    if(!empty($_COOKIE[session_name()])){
+      print("См: есть кука сессии ");
+      if(session_start()){
+        print("См: начали сессию ");
+        if(!empty($_SESSION['login'])) {
+          $values = getValuesFromDB($db, $_SESSION['login']);
+          printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+        }
+      }
+    }
   }
 
   include('form.php');
@@ -377,20 +398,17 @@ else {
     deleteErrorCookies();
   }
 
-  // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
   if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     // TODO: перезаписать данные в БД новыми данными,
     // кроме логина и пароля.
   }
   else {
-    // Генерируем уникальный логин и пароль.
     $login = substr(md5(time()), 0, 9);;
     $pass = substr(md5(time()), 10, 19);
 
     setcookie('login', $login);
     setcookie('pass', $pass);
 
-    // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
     saveToApplication($db);
     $id_app = saveToConnection($db);
     saveToAuth($db, $pass, $login, $id_app);

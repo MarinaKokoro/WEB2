@@ -17,7 +17,6 @@ $db = getDatabase();
 $session_started = false;
 
 if (isset($_COOKIE[session_name()]) && session_start()) {
-
   $session_started = true;
 
   if (!empty($_SESSION['login'])) {
@@ -50,25 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   <?php
 }
-// Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
-  // TODO: Проверть есть ли такой логин и пароль в базе данных.
   $auth = false;
   try {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
-    print($login);
-    print(' ');
-    //Проверить че не так
    
     $data = $db->prepare("select pass from auth where login = ?");
     $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
-   
-    print(md5($pass));
-    print(' ');
-    print($user['pass']);
-    //сравнивать через специальную функцию
+
     if(md5($pass) == $user['pass']){
       $auth = true;
     }
@@ -78,7 +68,6 @@ else {
     exit();
   }
 
-  // Выдать сообщение об ошибках.
   if(!$auth){
     print('<div class="error">Неверный логин или пароль</div>');
   }
@@ -86,12 +75,9 @@ else {
     if (!$session_started) {
       session_start();
     }
-    // Если все ок, то авторизуем пользователя.
     $_SESSION['login'] = $_POST['login'];
-    // Записываем ID пользователя.
     $_SESSION['uid'] = rand();
 
-    // Делаем перенаправление.
     header('Location: ./');
   }
 
