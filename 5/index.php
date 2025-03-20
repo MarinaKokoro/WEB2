@@ -395,14 +395,13 @@ else {
   else {
     deleteErrorCookies();
   }
-  print($_COOKIE[session_name()]);
-  print($_SESSION['login']);
 
   if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
     try {
-      $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE login = ?");
+
+      $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?");
       $stmt->execute([
-              $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio'], $_SESSION['login']
+              $_SESSION['uid'], $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio']
           ]);
 
       $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
