@@ -2,7 +2,6 @@
 session_start();
 header('Content-Type: text/html; charset=UTF-8');
 echo "<link rel='stylesheet' href='style.css'>";
-  // Не забыть про ЯП и доделать их для ошибочного ввода (предыдущее задание)
 
 
 function getDatabase(){
@@ -29,42 +28,31 @@ function getAbilities($db){
     exit();
   }
 }
-// Доделать
 function getValuesFromDB($db, $login){
-  // TODO: загрузить данные пользователя из БД
-    // и заполнить переменную $values,
-    // предварительно санитизовав.
-    // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
-
-  //Достать по логину id_app
-  // По id_app достать инфу для анкеты
-  // Не забыть про ЯП и доделать их для ошибочного ввода (предыдущее задание)
-
-
   $id = $db->prepare("SELECT id_app FROM auth where login = :login");
   $id->bindParam(':login', $login);
   $id->execute();
-  $id_app = id->fetch(PDO::FETCH_ASSOC);
+  $id_app = $id->fetch(PDO::FETCH_ASSOC);
 
   $data = $db->prepare("SELECT name, phone, email, dateBirth, sex, bio FROM application where id_app = ?");
   $data->execute([$id_app]);
   $user = $data->fetch(PDO::FETCH_ASSOC);
 
   $values = array();
-  if ($user_data) {
+  if ($user) {
             $values = [
-                'fio' => $user_data['name'],
-                'telephone' => $user_data['phone'],
-                'email' => $user_data['email'],
-                'dateOfBirth' => $user_data['dateBirth'],
-                'bio' => $user_data['bio'],
+                'fio' => $user['name'],
+                'telephone' => $user['phone'],
+                'email' => $user['email'],
+                'dateOfBirth' => $user['dateBirth'],
+                'bio' => $user['bio'],
             ];
 
             $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = ?");
             $tmp->execute([$id_app]);
             $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($tmp as $id_lang) {
+            foreach ($tmp_ab as $id_lang) {
                 $values[$id_lang] = 1;
             }
         }
@@ -372,12 +360,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (empty($errors)){
     if(isset($_COOKIE[session_name()])){
-      if(session_start()){
+      //if(session_start()){
         if(!empty($_SESSION['login'])) {
           $values = getValuesFromDB($db, $_SESSION['login']);
           printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
         }
-      }
+      //}
     }
   }
 
@@ -395,10 +383,12 @@ else {
   else {
     deleteErrorCookies();
   }
+  print($_COOKIE[session_name()]);
+  print($_SESSION['login']);
+  print($_SESSION['uid']);
 
   if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
     try {
-
       $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?");
       $stmt->execute([
               $_POST['fio'], $_POST['telephone'], $_POST['email'], $_POST['dateOfBirth'], $_POST['radio'], $_POST['bio'], $_SESSION['uid']
@@ -417,6 +407,7 @@ else {
     }
   }
   else {
+    print("Пользователь не авторизован")
     $login = substr(md5(time()), 0, 9);;
     $pass = substr(md5(time()), 10, 19);
 
@@ -434,7 +425,7 @@ else {
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
 
-  header('Location: ./');
+  //header('Location: ./');
 }
 
 
