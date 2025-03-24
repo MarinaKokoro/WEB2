@@ -363,7 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       //if(session_start()){
         if(!empty($_SESSION['login'])) {
           $values = getValuesFromDB($db, $_SESSION['login']);
-          printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+          $messages[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
         }
       //}
     }
@@ -407,7 +407,7 @@ else {
     }
   }
   else {
-    print("Пользователь не авторизован");
+    $messages[] = sprintf("Пользователь не авторизован");
     $login = substr(md5(time()), 0, 9);
     $pass = substr(md5(time()), 10, 19);
 
