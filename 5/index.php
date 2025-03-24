@@ -356,26 +356,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array_merge($messages, $errorMessages);
   $values = getValuesFromCookies($abilities);
 
-  echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-
-// Отладочный вывод ошибок
-echo "<pre>";
-print_r($errors);
-echo "</pre>";
-
-print_r($_COOKIE[session_name()]);
-
-  if (empty($errors)){
-    if(!isset($_COOKIE[session_name()])){
-      //if(session_start()){
-        if(!empty($_SESSION['login'])) {
-          $values = getValuesFromDB($db, $_SESSION['login']);
-          $messages[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
-        }
-      //}
-    }
+  if(!isset($_COOKIE[session_name()])){
+    //if(session_start()){
+      if(!empty($_SESSION['login'])) {
+        $values = getValuesFromDB($db, $_SESSION['login']);
+        $messages[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+      }
+  //}
   }
 
   include('form.php');
