@@ -356,10 +356,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array_merge($messages, $errorMessages);
   $values = getValuesFromCookies($abilities);
 
-  // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
-  // ранее в сессию записан факт успешного логина.
+  echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+
+// Отладочный вывод ошибок
+echo "<pre>";
+print_r($errors);
+echo "</pre>";
+
+print_r($_COOKIE[session_name()])
+
   if (empty($errors)){
-    if(isset($_COOKIE[session_name()])){
+    if(!isset($_COOKIE[session_name()])){
       //if(session_start()){
         if(!empty($_SESSION['login'])) {
           $values = getValuesFromDB($db, $_SESSION['login']);
@@ -383,9 +392,6 @@ else {
   else {
     deleteErrorCookies();
   }
-  $messages[] = $_COOKIE[session_name()];
-  $messages[] = $_SESSION['login'];
-  $messages[] = $_SESSION['uid'];
 
   if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
     try {
@@ -407,7 +413,6 @@ else {
     }
   }
   else {
-    $messages[] = "Пользователь не авторизован";
     $login = substr(md5(time()), 0, 9);
     $pass = substr(md5(time()), 10, 19);
 
