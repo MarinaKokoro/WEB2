@@ -425,7 +425,7 @@ else {
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
 
-  //header('Location: ./');
+  header('Location: ./');
 }
 
 
