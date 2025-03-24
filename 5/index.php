@@ -383,9 +383,9 @@ else {
   else {
     deleteErrorCookies();
   }
-  print($_COOKIE[session_name()]);
-  print($_SESSION['login']);
-  print($_SESSION['uid']);
+  $messages[] = $_COOKIE[session_name()];
+  $messages[] = $_SESSION['login'];
+  $messages[] = $_SESSION['uid'];
 
   if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
     try {
@@ -407,7 +407,7 @@ else {
     }
   }
   else {
-    $messages[] = sprintf("Пользователь не авторизован");
+    $messages[] = "Пользователь не авторизован";
     $login = substr(md5(time()), 0, 9);
     $pass = substr(md5(time()), 10, 19);
 
