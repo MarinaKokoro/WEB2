@@ -356,7 +356,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $messages = array_merge($messages, $errorMessages);
   $values = getValuesFromCookies($abilities);
 
-  if(!isset($_COOKIE[session_name()])){
+  if(isset($_COOKIE[session_name()])){
     //if(session_start()){
       if(!empty($_SESSION['login'])) {
         $values = getValuesFromDB($db, $_SESSION['login']);
