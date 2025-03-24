@@ -407,8 +407,8 @@ else {
     }
   }
   else {
-    print("Пользователь не авторизован")
-    $login = substr(md5(time()), 0, 9);;
+    print("Пользователь не авторизован");
+    $login = substr(md5(time()), 0, 9);
     $pass = substr(md5(time()), 10, 19);
 
     setcookie('login', $login);
