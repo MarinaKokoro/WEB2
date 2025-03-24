@@ -49,7 +49,7 @@ function getValuesFromDB($db, $login){
             ];
 
             $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = ?");
-            $tmp->execute([$id_app]);
+            $tmp->execute([$id_app['id_app']]);
             $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($tmp_ab as $id_lang) {
