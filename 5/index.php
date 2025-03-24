@@ -365,7 +365,7 @@ echo "<pre>";
 print_r($errors);
 echo "</pre>";
 
-print_r($_COOKIE[session_name()])
+print_r($_COOKIE[session_name()]);
 
   if (empty($errors)){
     if(!isset($_COOKIE[session_name()])){
