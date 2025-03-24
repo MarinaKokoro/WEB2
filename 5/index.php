@@ -35,7 +35,7 @@ function getValuesFromDB($db, $login){
   $id_app = $id->fetch(PDO::FETCH_ASSOC);
 
   $data = $db->prepare("SELECT name, phone, email, dateBirth, sex, bio FROM application where id_app = ?");
-  $data->execute([$id_app]);
+  $data->execute([$id_app['id_app']]);
   $user = $data->fetch(PDO::FETCH_ASSOC);
 
   $values = array();
