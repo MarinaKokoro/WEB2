@@ -53,7 +53,7 @@ function getValuesFromDB($db, $login){
             $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($tmp_ab as $id_lang) {
-                $values[$id_lang] = 1;
+                $values[$id_lang['id_lang']] = 1;
             }
         }
   return $values;
@@ -410,9 +410,6 @@ else {
     $id_app = saveToConnection($db);
     saveToAuth($db, $pass, $login, $id_app);
   }
-
-  //saveToApplication($db);
-  //saveToConnection($db);
 
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
