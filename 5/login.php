@@ -1,53 +1,47 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
+echo "<link rel='stylesheet' href='style.css'>";
 
 function getDatabase(){
   $user = 'u68859'; 
   $pass = '5248297'; 
   $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
       [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-
   return $db;
 }
+
 $db = getDatabase();
-
-// В суперглобальном массиве $_SESSION хранятся переменные сессии.
-// Будем сохранять туда логин после успешной авторизации.
-
 $session_started = false;
 
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
 
   if (!empty($_SESSION['login'])) {
-    // Если есть логин в сессии, то пользователь уже авторизован.
-    // TODO: Сделать выход (окончание сессии вызовом session_destroy()
-    //при нажатии на кнопку Выход).
-    // Делаем перенаправление на форму. 
-
-
-    //переделать
+    echo '<div class="form-container">';
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-      print('<form action="" method="post"><input id="exit" name="exit" type="submit" value="Выход"></form>');
+      echo '<form id="form" action="" method="post">
+            <h2>Вы авторизованы</h2>
+            <input id="exit" name="exit" type="submit" value="Выход" class="submit-btn">
+            </form>'
     }
     else { 
       session_destroy();
       header('Location: ./');
     }
+    echo '</div>';
     exit();
   }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  ?>
-
-  <form action="" method="post">
-    <input name="login" />
-    <input name="pass" />
-    <input type="submit" value="Войти" />
-  </form>
-
-  <?php
+  echo '<div class="form-container">
+        <form id="form" action="" method="post">
+        <h2>Авторизация</h2>
+        <input name="login" placeholder="Логин" required>
+        <input name="pass" type="password" placeholder="Пароль" required>
+        <input type="submit" value="Войти" class="submit-btn">
+        </form>
+        </div>';
 }
 else {
   $auth = false;
@@ -56,7 +50,7 @@ else {
     $login = $_POST['login'];
     $pass = $_POST['pass'];
    
-    $data = $db->prepare("select pass from auth where login = ?");
+    $data = $db->prepare("SELECT pass FROM auth WHERE login = ?");
     $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
 
@@ -64,20 +58,28 @@ else {
       $auth = true;
     }
 
-    $data = $db->prepare("select id_app from auth where login = ?");
+    $data = $db->prepare("SELECT id_app FROM auth WHERE login = ?");
     $data->execute([$login]);
     $user = $data->fetch(PDO::FETCH_ASSOC);
-
     $uid = $user['id_app'];
-    
   }
   catch(PDOException $e){
-    print('Error: ' . $e->getMessage());
+    echo '<div class="form-container">';
+    echo '<div class="error">Ошибка: ' . $e->getMessage() . '</div>';
+    echo '</div>';
     exit();
   }
 
   if(!$auth){
-    print('<div class="error">Неверный логин или пароль</div>');
+    echo '<div class="form-container">
+          <div class="error">Неверный логин или пароль</div>
+          <form id="form" action="" method="post">
+          <h2>Авторизация</h2>
+          <input name="login" placeholder="Логин" required>
+          <input name="pass" type="password" placeholder="Пароль" required>
+          <input type="submit" value="Войти" class="submit-btn">
+          </form>
+          </div>';
   }
   else{
     if (!$session_started) {
@@ -85,11 +87,7 @@ else {
     }
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['uid'] = $uid;
-
     header('Location: ./');
   }
-
-  
-
-  
 }
+?>
