@@ -235,7 +235,9 @@ function saveValueCookies($P, $abilities){
   setcookie('telephone_value', $P['telephone'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('email_value', $P['email'], time() + 12 * 30 * 24 * 60 * 60);
   setcookie('dateOfBirth_value', $P['dateOfBirth'], time() + 12 * 30 * 24 * 60 * 60);
-  //print_r($P);
+  foreach($abilities as $key => $value){
+      setcookie($key, '', 100000);
+  }
   foreach($P['abilities'] as $key => $value){
     setcookie($value, 1, time() + 12 * 30 * 24 * 60 * 60);
   }
@@ -342,9 +344,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="success">Спасибо, результаты сохранены.</div>';
   }
 
-   // Если в куках есть пароль, то выводим сообщение.
   if (!empty($_COOKIE['pass'])) {
-
     $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
       и паролем <strong>%s</strong> для изменения данных.',
       strip_tags($_COOKIE['login']),
@@ -357,12 +357,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values = getValuesFromCookies($abilities);
 
   if(isset($_COOKIE[session_name()])){
-    //if(session_start()){
       if(!empty($_SESSION['login'])) {
         $values = getValuesFromDB($db, $_SESSION['login']);
         $messages[] = sprintf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
       }
-  //}
   }
 
   include('form.php');
