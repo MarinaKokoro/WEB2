@@ -22,7 +22,7 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
       echo '<form id="form" action="" method="post">
             <h2>Вы авторизованы</h2>
             <input id="exit" name="exit" type="submit" value="Выход" class="submit-btn">
-            </form>'
+            </form>';
     }
     else { 
       session_destroy();
