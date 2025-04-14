@@ -179,9 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Вынести в функции для блока(файла) базы данных
 // Получение данных пользователей
 $users = $db->query("SELECT app.id_app, app.name, app.phone, app.email, app.dateBirth, app.sex, app.bio
-                      FROM application app 
-                      JOIN connection c 
-                        ON app.id_app = c.id_app"
+                      FROM application app"
                     )->fetchAll();
 
 $user_lang = $db->query("SELECT c.id_app, c.id_lang, l.name
