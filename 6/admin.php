@@ -169,7 +169,7 @@ function checkAdminAuth() {
 
 checkAdminAuth();
 $db = getDatabase();
-$abilities = getAbilities($db); // где-то в коде как $languages
+$abilities = getAbilities($db);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -210,7 +210,6 @@ $stats = $db->query("SELECT l.name, count(*) as user_count
                         l.id_lang"
                     )->fetchAll();
 
-// -------------------------------------------------- Проверено до этого момента --------------------------------------------------------------
 
 // Проверяем, нужно ли показать форму редактирования
 $edit_id = $_GET['edit'] ?? null;
@@ -263,7 +262,7 @@ if ($edit_id) {
                 <td><?php 
                   foreach ($user_lang as $lang){
                     if($lang['id_app'] == $user['id_app']){
-                      echo ($lang['name']);
+                      echo ($lang['name'], " ");
                     }
                   }
                   ?> 
