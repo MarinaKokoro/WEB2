@@ -123,14 +123,25 @@ function updateApplication($db, $id){
 }
 
 function deleteUserData($db, $id){
-  $stmt = $db->prepare("DELETE FROM application WHERE id_app = ?");
-  $stmt->execute([$id]);
+  try{
+    $db->beginTransaction();
 
-  $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
-  $stmt->execute([$id]);
+    $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
+    $stmt->execute([$id]);
 
-  $stmt = $db->prepare("DELETE FROM auth WHERE id_app = ?");
-  $stmt->execute([$id]);
+    $stmt = $db->prepare("DELETE FROM auth WHERE id_app = ?");
+    $stmt->execute([$id]);
+
+    $stmt = $db->prepare("DELETE FROM application WHERE id_app = ?");
+    $stmt->execute([$id]);
+
+    $db->commit();
+  } 
+  catch (PDOException $e) {
+    $db->rollBack();
+    print('Ошибка при удалении данных: ' . $e->getMessage());
+    exit();
+  }
 }
 
 // Переделать под БД
