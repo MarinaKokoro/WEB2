@@ -271,6 +271,7 @@ if ($edit_id) {
         </tbody>
     </table>
 
+    <?php if ($user_to_edit): ?>
     <div class="edit-form">"name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?"
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
