@@ -110,7 +110,7 @@ function updateApplication($db, $id){
           ]);
 
       $stmt = $db->prepare("DELETE FROM connection WHERE id_app = ?");
-      $stmt->execute($id);
+      $stmt->execute([$id]);
 
       foreach ($_POST['abilities'] as $id_lang) {
           $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (?, ?)");
