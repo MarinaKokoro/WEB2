@@ -245,6 +245,10 @@ if ($edit_id) {
     <link rel='stylesheet' href='style.css'>
 </head>
 <body>
+
+
+
+
     <h2>Данные пользователей</h2> 
     <table>
         <thead>
@@ -291,11 +295,15 @@ if ($edit_id) {
         </tbody>
     </table>
 
+
+
+
+
     <?php if ($user_to_edit): ?>
     <div class="edit-form">
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
-            <input type="hidden" name="id" value="<?= $user_to_edit['id_app'] ?>">
+            <input type="hidden" name="update" value="<?= $user_to_edit['id_app'] ?>">
             
             <label>ФИО:<br>
                 <input name="fio" type="text" value="<?= htmlspecialchars($user_to_edit['name']) ?>">
