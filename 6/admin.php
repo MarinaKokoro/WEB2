@@ -103,6 +103,8 @@ function saveToAuth($db, $pass, $login, $id_app){
 }
 
 function updateApplication($db, $id){
+  print('Id: ');
+  print($id);
   try {
       $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?");
       $stmt->execute([
