@@ -178,20 +178,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Вынести в функции для блока(файла) базы данных
 // Получение данных пользователей
-$users = $pdo->query("SELECT app.id_app, app.name, app.phone, app.email, app.dateBirth, app.sex, app.bio
+$users = $db->query("SELECT app.id_app, app.name, app.phone, app.email, app.dateBirth, app.sex, app.bio
                       FROM application app 
                       JOIN connection c 
                         ON app.id_app = c.id_app"
                     )->fetchAll();
 
-$user_lang = $pdo->query("SELECT c.id_app, c.id_lang, l.name
+$user_lang = $db->query("SELECT c.id_app, c.id_lang, l.name
                       FROM connection c 
                       JOIN langs l 
                         ON c.id_lang = l.id_lang"
                     )->fetchAll();                    
 
 // Получение статистики
-$stats = $pdo->query("SELECT l.name, count(*) as user_count
+$stats = $db->query("SELECT l.name, count(*) as user_count
                       FROM application app 
                       INNER JOIN connection c
                         ON app.id_app = c.id_app
