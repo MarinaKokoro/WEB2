@@ -262,7 +262,8 @@ if ($edit_id) {
                 <td><?php 
                   foreach ($user_lang as $lang){
                     if($lang['id_app'] == $user['id_app']){
-                      echo ($lang['name'], " ");
+                      echo ($lang['name']);
+                      echo(" ");
                     }
                   }
                   ?> 
