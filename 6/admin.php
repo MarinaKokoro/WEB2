@@ -303,7 +303,7 @@ if ($edit_id) {
     <div class="edit-form">
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
-            <input type="hidden" name="update" value="<?= $user_to_edit['id_app'] ?>">
+            <input type="hidden" name="update" value="<?= (int)$user_to_edit['id_app'] ?>">
             
             <label>ФИО:<br>
                 <input name="fio" type="text" value="<?= htmlspecialchars($user_to_edit['name']) ?>">
@@ -340,7 +340,7 @@ if ($edit_id) {
                 <textarea name="bio"><?= htmlspecialchars($user_to_edit['bio']) ?></textarea>
             </label><br><br>
             
-            <button type="submit" name="update">Сохранить</button>
+            <button type="submit">Сохранить</button>
             <a href="admin.php">Отмена</a>
         </form>
     </div>
