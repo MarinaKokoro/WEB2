@@ -216,7 +216,7 @@ $edit_id = $_GET['edit'] ?? null;
 $user_to_edit = null;
 if ($edit_id) {
     foreach ($users as $user) {
-        if ($user['id'] == $edit_id) {
+        if ($user['id_app'] == $edit_id) {
             $user_to_edit = $user;
             break;
         }
