@@ -214,11 +214,20 @@ $stats = $db->query("SELECT l.name, count(*) as user_count
 // Проверяем, нужно ли показать форму редактирования
 $edit_id = $_GET['edit'] ?? null;
 $user_to_edit = null;
+$user_langs = []; 
+
 if ($edit_id) {
     foreach ($users as $user) {
-        if ($user['id_app'] == $edit_id) {
+        if ($user['id_app'] == $edit_id) {  
             $user_to_edit = $user;
             break;
+        }
+    }
+    if ($user_to_edit) {
+        foreach ($user_lang as $lang) {
+            if ($lang['id_app'] == $user_to_edit['id_app']) {
+                $user_langs[] = $lang['id_lang'];
+            }
         }
     }
 }
@@ -281,7 +290,7 @@ if ($edit_id) {
     </table>
 
     <?php if ($user_to_edit): ?>
-    <div class="edit-form">"name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?"
+    <div class="edit-form">
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
             <input type="hidden" name="id" value="<?= htmlspecialchars($user_to_edit['id_app']) ?>">
@@ -307,24 +316,14 @@ if ($edit_id) {
                 <label><input type="radio" name="radio" value="male" <?= $user_to_edit['sex'] == 'male' ? 'checked' : '' ?>> Мужской</label>
             </label><br><br>
 
-            <?php
-              $langs = [];
-              foreach ($user_lang as $lang){
-                    if($lang['id_app'] == $user['id_app']){
-                      $langs[] = $lang['id_lang']; 
-                    }
-                  }
-            ?>
-            
             <label>Любимые языки программирования:<br>
-                <select name="abilities[]" multiple>
-                    <?php foreach ($abilities as $ability): ?>
-                        <option value="<?= $ability['id_lang'] ?>" 
-                            <?= in_array($ability['id_lang'], $langs) ? ' selected ' : '' ?>>
-                            <?= htmlspecialchars($ability['name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <select name="abilities[]" multiple>
+                <?php foreach ($abilities as $id_lang => $name): ?>
+                    <option value="<?= $id_lang ?>" <?= in_array($id_lang, $user_langs) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($name) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             </label><br><br>
             
             <label>Биография:<br>
