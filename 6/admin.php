@@ -136,7 +136,7 @@ function deleteUserData($db, $id){
 // Переделать под БД
 $admin_data = [
     'login' => 'admin',
-    'password_hash' => password_hash('admin123', PASSWORD_DEFAULT); 
+    'password_hash' => password_hash('admin123', PASSWORD_DEFAULT) 
 ];
 
 function checkAdminAuth() {
