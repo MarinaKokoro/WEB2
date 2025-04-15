@@ -1,13 +1,17 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 echo "<link rel='stylesheet' href='style.css'>";
+include('modules/db.php');
 
-function getDatabase(){
-  $user = 'u68859'; 
-  $pass = '5248297'; 
-  $db = new PDO('mysql:host=localhost;dbname=u68859', $user, $pass, 
-      [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-  return $db;
+
+
+function checkAuth($db, $pass, $login){
+  $user = getUserAuthData($db, $login);
+  if(md5($pass) == $user['pass']){
+      return true;
+  }else{
+    return false;
+  }
 }
 function authorized(){
   echo '<div class="form-container">';
@@ -44,43 +48,9 @@ function printFieldsToAuthAndError(){
           </form>
           </div>';
 }
-function checkAuth($db, $pass, $login){
-  try {
-    $data = $db->prepare("SELECT pass FROM auth WHERE login = ?");
-    $data->execute([$login]);
-    $user = $data->fetch(PDO::FETCH_ASSOC);
 
-    if(md5($pass) == $user['pass']){
-      return true;
-    }else{
-      return false;
-    }
-  }
-  catch(PDOException $e){
-    echo '<div class="form-container">';
-    echo '<div class="error">Ошибка: ' . $e->getMessage() . '</div>';
-    echo '</div>';
-    exit();
-  }
-}
-function getId($db, $login){
-  try{
-    $data = $db->prepare("SELECT id_app FROM auth WHERE login = ?");
-    $data->execute([$login]);
-    $user = $data->fetch(PDO::FETCH_ASSOC);
-    return $user['id_app'];
-  }
-  catch(PDOException $e){
-    echo '<div class="form-container">';
-    echo '<div class="error">Ошибка: ' . $e->getMessage() . '</div>';
-    echo '</div>';
-    exit();
-  }
-}
 
-$db = getDatabase();
 $session_started = false;
-
 
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
@@ -100,7 +70,7 @@ else {
   $pass = $_POST['pass'];
   $auth = checkAuth($db, $pass, $login);
   if ($auth){
-    $uid = getId($db, $login);
+    $uid = getUserId($db, $login);
 
     if (!$session_started) {
       session_start();

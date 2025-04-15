@@ -118,6 +118,34 @@ function getStatsAboutLangs($db){
     exit();
   }
 }
+function getUserId($db, $login){
+  try{
+    $data = $db->prepare("SELECT id_app FROM auth WHERE login = ?");
+    $data->execute([$login]);
+    $user = $data->fetch(PDO::FETCH_ASSOC);
+    return $user['id_app'];
+  }
+  catch(PDOException $e){
+    echo '<div class="form-container">';
+    echo '<div class="error">Ошибка: ' . $e->getMessage() . '</div>';
+    echo '</div>';
+    exit();
+  }
+}
+function getUserAuthData($db, $login){
+  try {
+    $data = $db->prepare("SELECT pass FROM auth WHERE login = ?");
+    $data->execute([$login]);
+    $user = $data->fetch(PDO::FETCH_ASSOC);
+    return $user;
+  }
+  catch(PDOException $e){
+    echo '<div class="form-container">';
+    echo '<div class="error">Ошибка: ' . $e->getMessage() . '</div>';
+    echo '</div>';
+    exit();
+  }
+}
 
 function saveToApplication($db){
   try {
