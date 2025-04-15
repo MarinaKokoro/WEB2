@@ -1,7 +1,7 @@
 <?php
+echo "<link rel='stylesheet' href='style.css'>";
 /*
   - Оформить визуал
-  - Вынести всё лишнее в файлы (подписано)
 
 */
 include('modules/db.php');
@@ -68,7 +68,7 @@ if ($edit_id) {
 <head>
     <meta charset="UTF-8">
     <title>Админка</title>
-    <link rel='stylesheet' href='style.css'>
+    
 </head>
 <body>
 
