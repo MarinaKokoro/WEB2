@@ -1,6 +1,5 @@
 <?php
 header("Content-type: text/css; charset: UTF-8");
-echo "<link rel='stylesheet' href='style.css'>";
 /*
   - Оформить визуал
 
@@ -69,7 +68,7 @@ if ($edit_id) {
 <head>
     <meta charset="UTF-8">
     <title>Админка</title>
-    
+    <link rel='stylesheet' href='style.css'>
 </head>
 <body>
 
