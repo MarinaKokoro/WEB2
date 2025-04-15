@@ -1,4 +1,11 @@
 <?php
+/*
+  - Оформить визуал
+  - Вынести всё лишнее в файлы (подписано)
+  - Вынести данные админа в отдельную БД
+
+*/
+
 //Вынести в отдельный файл (и из index.php)
 function getDatabase(){
   $user = 'u68859'; 
@@ -25,34 +32,40 @@ function getAbilities($db){
   }
 }
 function getValuesFromDB($db, $login){
-  $id = $db->prepare("SELECT id_app FROM auth where login = :login");
-  $id->bindParam(':login', $login);
-  $id->execute();
-  $id_app = $id->fetch(PDO::FETCH_ASSOC);
+  try{
+    $id = $db->prepare("SELECT id_app FROM auth where login = :login");
+    $id->bindParam(':login', $login);
+    $id->execute();
+    $id_app = $id->fetch(PDO::FETCH_ASSOC);
 
-  $data = $db->prepare("SELECT name, phone, email, dateBirth, sex, bio FROM application where id_app = ?");
-  $data->execute([$id_app['id_app']]);
-  $user = $data->fetch(PDO::FETCH_ASSOC);
+    $data = $db->prepare("SELECT name, phone, email, dateBirth, sex, bio FROM application where id_app = ?");
+    $data->execute([$id_app['id_app']]);
+    $user = $data->fetch(PDO::FETCH_ASSOC);
 
-  $values = array();
-  if ($user) {
-            $values = [
-                'fio' => $user['name'],
-                'telephone' => $user['phone'],
-                'email' => $user['email'],
-                'dateOfBirth' => $user['dateBirth'],
-                'bio' => $user['bio'],
-            ];
+    $values = array();
+    if ($user) {
+              $values = [
+                  'fio' => $user['name'],
+                  'telephone' => $user['phone'],
+                  'email' => $user['email'],
+                  'dateOfBirth' => $user['dateBirth'],
+                  'bio' => $user['bio'],
+              ];
 
-            $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = ?");
-            $tmp->execute([$id_app['id_app']]);
-            $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
+              $tmp = $db->prepare("SELECT id_lang FROM connection WHERE id_app = ?");
+              $tmp->execute([$id_app['id_app']]);
+              $tmp_ab = $tmp->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($tmp_ab as $id_lang) {
-                $values[$id_lang['id_lang']] = 1;
-            }
-        }
-  return $values;
+              foreach ($tmp_ab as $id_lang) {
+                  $values[$id_lang['id_lang']] = 1;
+              }
+          }
+    return $values;
+  }
+  catch (PDOException $e) {
+    print('Ошибка при получении данных: ' . $e->getMessage());
+    exit();
+  }
 }
 
 function saveToApplication($db){
@@ -103,8 +116,6 @@ function saveToAuth($db, $pass, $login, $id_app){
 }
 
 function updateApplication($db, $id){
-  print('Id: ');
-  print($id);
   try {
       $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, dateBirth = ?, sex = ?, bio = ? WHERE id_app = ?");
       $stmt->execute([
@@ -118,10 +129,10 @@ function updateApplication($db, $id){
           $stmt = $db->prepare("INSERT INTO connection (id_app, id_lang) VALUES (?, ?)");
           $stmt->execute([$id, $id_lang]);
       }
-    } catch (PDOException $e) {
-        print('Ошибка при сохранении данных: ' . $e->getMessage());
-        exit();
-    }
+  } catch (PDOException $e) {
+      print('Ошибка при сохранении данных: ' . $e->getMessage());
+      exit();
+  }
 }
 
 function deleteUserData($db, $id){
@@ -145,20 +156,26 @@ function deleteUserData($db, $id){
     exit();
   }
 }
+function getAdminData($db, $login){
+  try{
+    $data = $db->prepare("SELECT login, pass FROM admins where login = :login");
+    $data->bindParam(':login', $login);
+    $data->execute();
+    $data = $data->fetch(PDO::FETCH_ASSOC);
+    return $data;
+  }
+  catch (PDOException $e) {
+    print('Ошибка при получении данных: ' . $e->getMessage());
+    exit();
+  }
+}
 
-// Переделать под БД
-$admin_data = [
-    'login' => 'admin',
-    'password_hash' => password_hash('admin123', PASSWORD_DEFAULT) 
-];
-
-function checkAdminAuth() {
-    global $admin_data;
+function checkAdminAuth($db) {
+    $admin_data = getAdminData($db, empty($_SERVER['PHP_AUTH_PW']) ? '' : $_SERVER['PHP_AUTH_PW']);
     
     if (empty($_SERVER['PHP_AUTH_USER']) || 
         empty($_SERVER['PHP_AUTH_PW']) ||
-        $_SERVER['PHP_AUTH_USER'] != $admin_data['login'] ||
-        !password_verify($_SERVER['PHP_AUTH_PW'], $admin_data['password_hash'])) 
+        !password_verify($_SERVER['PHP_AUTH_PW'], $admin_data['pass'])) 
     {
         header('HTTP/1.1 401 Unauthorized');
         header('WWW-Authenticate: Basic realm="Admin Panel"');
