@@ -186,9 +186,11 @@ function checkAdminAuth($db) {
 
 
 
-checkAdminAuth();
+
 $db = getDatabase();
 $abilities = getAbilities($db);
+
+checkAdminAuth($db);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
