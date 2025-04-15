@@ -171,7 +171,7 @@ function getAdminData($db, $login){
 }
 
 function checkAdminAuth($db) {
-    $admin_data = getAdminData($db, empty($_SERVER['PHP_AUTH_PW']) ? '' : $_SERVER['PHP_AUTH_PW']);
+    $admin_data = getAdminData($db, empty($_SERVER['PHP_AUTH_USER']) ? '' : $_SERVER['PHP_AUTH_USER']);
     
     if (empty($_SERVER['PHP_AUTH_USER']) || 
         empty($_SERVER['PHP_AUTH_PW']) ||
