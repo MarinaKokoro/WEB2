@@ -74,7 +74,7 @@ if ($edit_id) {
 
 
 
-
+  <?php if ($user_to_edit == null): ?>
     <h2>Данные пользователей</h2> 
     <table>
         <thead>
@@ -120,7 +120,7 @@ if ($edit_id) {
             <?php endforeach; ?>
         </tbody>
     </table>
-
+  <?php endif; ?>
 
 
 
@@ -171,7 +171,10 @@ if ($edit_id) {
         </form>
     </div>
     <?php endif; ?>
+    
 
+
+    <?php if ($user_to_edit == null): ?>
     <h2>Статистика по языкам</h2>
     <table>
         <thead>
@@ -189,6 +192,8 @@ if ($edit_id) {
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
+
 </body>
 </html>
 
