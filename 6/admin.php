@@ -130,28 +130,22 @@ if ($edit_id) {
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
             <input type="hidden" name="update" value="<?= (int)$user_to_edit['id_app'] ?>">
-            
             <label>ФИО:<br>
                 <input name="fio" type="text" value="<?= htmlspecialchars($user_to_edit['name']) ?>">
             </label><br><br>
-            
             <label>Телефон:<br>
                 <input name="telephone" type="tel" value="<?= htmlspecialchars($user_to_edit['phone']) ?>">
             </label><br><br>
-            
             <label>Email:<br>
                 <input name="email" type="email" value="<?= htmlspecialchars($user_to_edit['email']) ?>">
             </label><br><br>
-            
             <label>Дата рождения:<br>
                 <input name="dateOfBirth" type="date" value="<?= htmlspecialchars($user_to_edit['dateBirth']) ?>">
             </label><br><br>
-            
             <label>Пол:<br>
                 <label><input type="radio" name="radio" value="female" <?= $user_to_edit['sex'] == 'female' ? 'checked' : '' ?>> Женский</label>
                 <label><input type="radio" name="radio" value="male" <?= $user_to_edit['sex'] == 'male' ? 'checked' : '' ?>> Мужской</label>
             </label><br><br>
-
             <label>Любимые языки программирования:<br>
             <select name="abilities[]" multiple>
                 <?php foreach ($abilities as $id_lang => $name): ?>
@@ -161,11 +155,9 @@ if ($edit_id) {
                 <?php endforeach; ?>
             </select>
             </label><br><br>
-            
             <label>Биография:<br>
                 <textarea name="bio"><?= htmlspecialchars($user_to_edit['bio']) ?></textarea>
             </label><br><br>
-            
             <button type="submit">Сохранить</button>
             <a href="admin.php">Отмена</a>
         </form>
