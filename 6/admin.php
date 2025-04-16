@@ -130,35 +130,43 @@ if ($edit_id) {
         <h2>Редактирование заявки #<?= htmlspecialchars($user_to_edit['id_app']) ?></h2>
         <form method="post">
             <input type="hidden" name="update" value="<?= (int)$user_to_edit['id_app'] ?>">
-            <label>ФИО:<br>
+            
+            <label>ФИО:
                 <input name="fio" type="text" value="<?= htmlspecialchars($user_to_edit['name']) ?>">
-            </label><br><br>
-            <label>Телефон:<br>
+            </label>
+            
+            <label>Телефон:
                 <input name="telephone" type="tel" value="<?= htmlspecialchars($user_to_edit['phone']) ?>">
-            </label><br><br>
-            <label>Email:<br>
+            </label>
+            
+            <label>Email:
                 <input name="email" type="email" value="<?= htmlspecialchars($user_to_edit['email']) ?>">
-            </label><br><br>
-            <label>Дата рождения:<br>
+            </label>
+            
+            <label>Дата рождения:
                 <input name="dateOfBirth" type="date" value="<?= htmlspecialchars($user_to_edit['dateBirth']) ?>">
-            </label><br><br>
+            </label>
+            
             <div class="radio-group">
                 <label>Пол:</label>
                 <label><input type="radio" name="radio" value="female" <?= $user_to_edit['sex'] == 'female' ? 'checked' : '' ?>> Женский</label>
                 <label><input type="radio" name="radio" value="male" <?= $user_to_edit['sex'] == 'male' ? 'checked' : '' ?>> Мужской</label>
             </div>
-            <label>Любимые языки программирования:<br>
-            <select name="abilities[]" multiple>
-                <?php foreach ($abilities as $id_lang => $name): ?>
-                    <option value="<?= $id_lang ?>" <?= in_array($id_lang, $user_langs) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($name) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            </label><br><br>
-            <label>Биография:<br>
+
+            <label>Любимые языки программирования:
+                <select name="abilities[]" multiple>
+                    <?php foreach ($abilities as $id_lang => $name): ?>
+                        <option value="<?= $id_lang ?>" <?= in_array($id_lang, $user_langs) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($name) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            
+            <label>Биография:
                 <textarea name="bio"><?= htmlspecialchars($user_to_edit['bio']) ?></textarea>
-            </label><br><br>
+            </label>
+            
             <div class="form-actions">
                 <button type="submit">Сохранить</button>
                 <a href="admin.php">Отмена</a>
