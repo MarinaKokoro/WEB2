@@ -114,7 +114,7 @@ if ($edit_id) {
                         <input type="hidden" name="delete" value="<?= $user['id_app'] ?>">
                         <button type="submit">Удалить</button>
                     </form>
-                    <a href="admin.php?edit=<?= $user['id_app'] ?>">Редактировать</a>
+                    <a href="admin.php?edit=<?= $user['id_app'] ?>" class="edit-link">Редактировать</a>
                 </td>
             </tr>
             <?php endforeach; ?>
