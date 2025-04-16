@@ -142,10 +142,11 @@ if ($edit_id) {
             <label>Дата рождения:<br>
                 <input name="dateOfBirth" type="date" value="<?= htmlspecialchars($user_to_edit['dateBirth']) ?>">
             </label><br><br>
-            <label>Пол:<br>
+            <div class="radio-group">
+                <label>Пол:</label>
                 <label><input type="radio" name="radio" value="female" <?= $user_to_edit['sex'] == 'female' ? 'checked' : '' ?>> Женский</label>
                 <label><input type="radio" name="radio" value="male" <?= $user_to_edit['sex'] == 'male' ? 'checked' : '' ?>> Мужской</label>
-            </label><br><br>
+            </div>
             <label>Любимые языки программирования:<br>
             <select name="abilities[]" multiple>
                 <?php foreach ($abilities as $id_lang => $name): ?>
@@ -158,8 +159,10 @@ if ($edit_id) {
             <label>Биография:<br>
                 <textarea name="bio"><?= htmlspecialchars($user_to_edit['bio']) ?></textarea>
             </label><br><br>
-            <button type="submit">Сохранить</button>
-            <a href="admin.php">Отмена</a>
+            <div class="form-actions">
+                <button type="submit">Сохранить</button>
+                <a href="admin.php">Отмена</a>
+            </div>
         </form>
     </div>
     <?php endif; ?>
