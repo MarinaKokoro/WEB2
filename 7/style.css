@@ -1,0 +1,295 @@
+/* Основное */
+body {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh; 
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px 0; 
+    flex-direction: column; 
+    align-items: center; 
+}
+
+
+#messages {
+    width: 320px; 
+    text-align: center;
+    margin-bottom: 15px; 
+}
+
+.error, .success {
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background: white;
+    margin: 5px 0;
+}
+
+.error {
+    border: 2px solid red;
+    color: red;
+}
+
+.success {
+    border: 2px solid green;
+    color: green;
+}
+
+
+#form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+input, #abilities, #bio {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+.radio, #check {
+    width: auto;
+    margin-right: 5px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 5px 0;
+}
+
+#bio {
+    height: 100px; 
+    resize: none;
+}
+
+
+#submit {
+    background-color: #1f87b0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#submit:hover {
+    background-color: #125874;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#form h2 {
+    color: #1f87b0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: #1f87b0;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #125874;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Админка  */
+h2 {
+    color: #1f87b0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+table {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #1f87b0;
+    color: white;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.edit-link {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #1f87b0;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.edit-link:hover {
+    background-color: #125874;
+    color: white;
+    text-decoration: none;
+}
+
+form[style="display: inline;"] button {
+    padding: 8px 15px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+form[style="display: inline;"] button:hover {
+    background-color: #c9302c;
+}
+
+.edit-link, form[style="display: inline;"] button {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Стили для формы редактирования */
+.edit-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    margin: 20px auto;
+}
+
+.edit-form h2 {
+    color: #1f87b0;
+    margin: 0 0 15px 0;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.edit-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="tel"],
+.edit-form input[type="email"],
+.edit-form input[type="date"],
+.edit-form textarea,
+.edit-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.edit-form textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.edit-form select[multiple] {
+    height: auto;
+    min-height: 80px;
+    padding: 5px;
+}
+
+.edit-form .radio-group {
+    margin: 10px 0;
+}
+
+.edit-form .radio-group label {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.edit-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.edit-form button {
+    padding: 8px 15px;
+    background-color: #1f87b0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-form button:hover {
+    background-color: #125874;
+}
+
+.edit-form a {
+    padding: 8px 15px;
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.edit-form a:hover {
+    background-color: #ddd;
+}
+
